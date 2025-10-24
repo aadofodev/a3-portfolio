@@ -1,253 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Awesome Alex Anders - Digital Business Student & Aspiring Entrepreneur</title>
-    <meta name="description" content="Third-year Informatics and Management of Digital Businesses student at Free University of Bozen-Bolzano. Bridging Technology and Business.">
-    
-    <!-- SEO & Social Media Meta Tags -->
-    <meta name="author" content="Awesome Alex Anders">
-    <meta name="keywords" content="digital business, informatics, entrepreneurship, web development, business strategy">
-    <meta property="og:title" content="Awesome Alex Anders | Digital Business Portfolio">
-    <meta property="og:description" content="Innovation and collaboration runs deep in his work - bridging disciplines to create meaningful digital solutions">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://awesomealexanders.com">
-    <meta property="og:image" content="https://awesomealexanders.com/og-image.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Awesome Alex Anders | Digital Business Portfolio">
-    <meta name="twitter:description" content="Innovation and collaboration runs deep in his work">
-    <meta name="twitter:image" content="https://awesomealexanders.com/twitter-card.jpg">
-    
-    <!-- Content Security Policy (Cloudflare handles headers, this is fallback) -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline'; img-src 'self' https://images.unsplash.com data:; font-src 'self' https://r2cdn.perplexity.ai; connect-src 'self' https://unpkg.com;">
-    
-    <!-- PWA Support -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#218c9e">
-    
-    <!-- Preload Critical Resources -->
-    <link rel="preload" href="https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2" as="font" type="font/woff2" crossorigin>
-    
-    <!-- DNS Prefetch for External Resources -->
-    <link rel="dns-prefetch" href="//images.unsplash.com">
-    
-    <!-- External Stylesheet (OPTIMIZED - extracted CSS for caching) -->
-    <link rel="stylesheet" href="styles.css">
-    
-    <!-- DOMPurify for secure HTML sanitization (XSS protection) -->
-    <script src="https://unpkg.com/dompurify@3.0.6/dist/purify.min.js" integrity="sha384-5VXXoHXJ3gJ8F1A8S1cRi4qsO3EtNm8b0j6H3M8tFjJVGXDx8S2gZ+5aHCqPqY8E" crossorigin="anonymous" defer></script>
-    
-    <!-- Structured Data for SEO (JSON-LD) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Awesome Alex Anders",
-      "url": "https://awesomealexanders.com",
-      "jobTitle": "Digital Business Student & Web Developer",
-      "description": "Third-year Informatics and Management of Digital Businesses student at Free University of Bozen-Bolzano",
-      "affiliation": {
-        "@type": "Organization",
-        "name": "Free University of Bozen-Bolzano"
-      },
-      "knowsAbout": [
-        "Digital Business",
-        "Web Development", 
-        "UX Design",
-        "Business Strategy",
-        "Data Visualization",
-        "E-Commerce Analytics"
-      ],
-      "alumniOf": {
-        "@type": "Organization",
-        "name": "Free University of Bozen-Bolzano"
-      }
-    }
-    </script>
-    
-    <!-- Web Vitals Monitoring (performance tracking) -->
-    <script src="web-vitals.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Awesome Alex Anders Portfolio</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
+  <header class="header">
+    <nav class="nav">
+      <a href="#" class="logo-text">
+        <span class="initials">AAA</span>
+        <span class="full-name">AWESOME ALEX ANDERS</span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="about.html" class="nav__link">ABOUT</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <!-- Skip to Content Link for Screen Readers -->
-    <a href="#main-content" class="sr-only" style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;" 
-       onfocus="this.style.position='static'; this.style.width='auto'; this.style.height='auto'; this.style.overflow='visible'; this.style.background='var(--color-primary)'; this.style.color='var(--color-btn-primary-text)'; this.style.padding='8px 16px'; this.style.textDecoration='none'; this.style.zIndex='9999';"
-       onblur="this.style.position='absolute'; this.style.left='-9999px'; this.style.width='1px'; this.style.height='1px'; this.style.overflow='hidden';">Skip to main content</a>
-    
-    <!-- Header -->
-    <header class="header" role="banner">
-        <nav class="nav container" role="navigation" aria-label="Main navigation">
-            <div class="nav__brand logo-text" onclick="goHome()" role="button" tabindex="0" aria-label="Go to homepage - Awesome Alex Anders">
-                Awesome Alex Anders
-            </div>
-            <div class="nav__toggle" id="nav-toggle" role="button" tabindex="0" aria-label="Toggle navigation menu" aria-expanded="false">
-                <span class="hamburger"></span>
-            </div>
-            <ul class="nav__list" id="nav-menu">
-                <li class="nav__item">
-                    <a href="#projects" class="nav__link">Projects</a>
-                </li>
-                <li class="nav__item">
-                    <a href="#about" class="nav__link">About</a>
-                </li>
-                <li class="nav__item">
-                    <a href="#contact" class="nav__link">Contact</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
+  <main>
+    <!-- Hero Section -->
+    <section class="hero section">
+      <div class="hero__content">
+        <h1 class="hero__flat-text">BRIDGING DISCIPLINES TO CREATE MEANINGFUL DIGITAL SOLUTIONS.</h1>
+      </div>
+    </section>
 
-    <!-- Main Content -->
-    <main id="main-content">
-        
-        <!-- Hero Section -->
-        <section class="hero" id="home">
-            <div class="container">
-                <h1 class="hero__title">BRIDGING DISCIPLINES TO CREATE MEANINGFUL DIGITAL SOLUTIONS.</h1>
-                <p class="hero__subtitle">Digital Business Student & Web Developer at Free University of Bozen-Bolzano</p>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section class="projects" id="projects">
-            <div class="container">
-                <h2 class="section-title">PROJECTS</h2>
-                <div class="projects__grid">
-                    <article class="project-card">
-                        <h3 class="project-card__title">E-COMMERCE ANALYTICS</h3>
-                        <p class="project-card__description">Data-driven solutions for online marketplace optimization</p>
-                    </article>
-                    <article class="project-card">
-                        <h3 class="project-card__title">DIGITAL MARKETPLACE</h3>
-                        <p class="project-card__description">Building platforms that connect buyers and sellers efficiently</p>
-                    </article>
-                    <article class="project-card">
-                        <h3 class="project-card__title">LEARNING PLATFORM</h3>
-                        <p class="project-card__description">Educational technology solutions for better learning outcomes</p>
-                    </article>
-                    <article class="project-card">
-                        <h3 class="project-card__title">BUSINESS STRATEGY</h3>
-                        <p class="project-card__description">Strategic planning combining technology and business insights</p>
-                    </article>
-                    <article class="project-card">
-                        <h3 class="project-card__title">UX DESIGN WORK</h3>
-                        <p class="project-card__description">User-centered design for seamless digital experiences</p>
-                    </article>
-                    <article class="project-card">
-                        <h3 class="project-card__title">DATA VISUALIZATION</h3>
-                        <p class="project-card__description">Turning complex data into actionable visual insights</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section class="about" id="about">
-            <div class="container">
-                <h2 class="section-title">CURRENTLY</h2>
-                <article class="about__content">
-                    <h3 class="about__subtitle">Building innovative digital solutions that bridge technology and business at Free University of Bozen-Bolzano</h3>
-                    <p class="about__text">
-                        Focusing on interdisciplinary projects that combine technical expertise with business strategy. Currently developing solutions for digital marketplace optimization and business intelligence systems.
-                    </p>
-                </article>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section class="contact" id="contact">
-            <div class="container">
-                <h2 class="section-title">GET IN TOUCH</h2>
-                <p class="contact__text">Interested in collaborating? Let's create something great together.</p>
-                <a href="mailto:alex@awesomealexanders.com" class="btn btn--primary">Send me an email</a>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer" role="contentinfo">
-        <div class="container">
-            <p class="footer__text">&copy; 2024 Awesome Alex Anders. All rights reserved.</p>
-            <p class="footer__text footer__text--small">Built with performance, security, and accessibility in mind.</p>
+    <!-- Projects Section -->
+    <section class="section" id="projects">
+      <div class="container">
+        <h2 class="section__title">PROJECTS</h2>
+        <div class="projects__grid">
+          <div class="project-card">
+            <h3>E-COMMERCE ANALYTICS</h3>
+            <p>Data-driven solutions for online marketplace optimization</p>
+          </div>
+          <div class="project-card">
+            <h3>DIGITAL MARKETPLACE</h3>
+            <p>Building platforms that connect buyers and sellers efficiently</p>
+          </div>
+          <div class="project-card">
+            <h3>LEARNING PLATFORM</h3>
+            <p>Educational technology solutions for better learning outcomes</p>
+          </div>
+          <div class="project-card">
+            <h3>BUSINESS STRATEGY</h3>
+            <p>Strategic planning combining technology and business insights</p>
+          </div>
+          <div class="project-card">
+            <h3>UX DESIGN WORK</h3>
+            <p>User-centered design for seamless digital experiences</p>
+          </div>
+          <div class="project-card">
+            <h3>DATA VISUALIZATION</h3>
+            <p>Turning complex data into actionable visual insights</p>
+          </div>
         </div>
-    </footer>
+      </div>
+    </section>
 
-    <!-- Performance Monitoring and Enhancements -->
-    <script defer>
-        // Development mode flag (set to false for production)
-        const __DEV__ = false;
+    <!-- Currently Section -->
+    <section class="section contact" id="currently">
+      <div class="container">
+        <h2 class="section__title">CURRENTLY</h2>
+        <div class="contact__content">
+          <div class="contact-info">
+            <h3>Building innovative digital solutions that bridge technology and business at Free University of Bozen-Bolzano</h3>
+            <p>Focusing on interdisciplinary projects that combine technical expertise with business strategy. Currently developing solutions for digital marketplace optimization and business intelligence systems.</p>
+            <p>Interested in collaborating? Let's create something great together.</p>
+            <div class="social-links">
+              <a href="mailto:your.email@example.com" class="social-link">EMAIL</a>
+              <a href="https://linkedin.com/in/yourprofile" target="_blank" class="social-link">LINKEDIN</a>
+              <a href="https://github.com/yourgithub" target="_blank" class="social-link">GITHUB</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-        // Performance monitoring
-        if ('performance' in window) {
-            performance.mark('page-interactive-start');
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__content">
+        <p class="footer__text">&copy; 2024 Awesome Alex Anders. All rights reserved.</p>
+        <div class="footer__links">
+          <a href="#" class="footer-link">Back to Top</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scroll for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
         }
-        
-        // Accessibility: Announce page changes to screen readers
-        function announceToScreenReader(message) {
-            const announcement = document.createElement('div');
-            announcement.setAttribute('aria-live', 'polite');
-            announcement.setAttribute('aria-atomic', 'true');
-            announcement.className = 'sr-only';
-            announcement.textContent = message;
-            document.body.appendChild(announcement);
-            
-            setTimeout(() => announcement.remove(), 1000);
+      });
+    });
+
+    // Logo animation on hover
+    const logoText = document.querySelector('.logo-text');
+    if (logoText) {
+      logoText.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    // Intersection Observer for scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
         }
+      });
+    }, observerOptions);
 
-        // Navigation handler
-        function goHome() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            announceToScreenReader('Scrolled to top');
-        }
-
-        // Service Worker registration with error handling
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
-                .then(registration => {
-                    if (__DEV__) console.log('SW registered:', registration);
-                })
-                .catch(error => {
-                    if (__DEV__) console.error('SW registration failed:', error);
-                });
-        }
-
-        // Page load performance tracking
-        if ('performance' in window && 'timing' in window.performance) {
-            window.addEventListener('load', () => {
-                setTimeout(() => {
-                    const timing = window.performance.timing;
-                    const loadTime = timing.loadEventEnd - timing.navigationStart;
-                    if (__DEV__) console.log('Page load time:', loadTime + 'ms');
-                }, 0);
-            });
-        }
-
-        // Mobile menu toggle
-        const navToggle = document.getElementById('nav-toggle');
-        const navMenu = document.getElementById('nav-menu');
-        if (navToggle && navMenu) {
-            navToggle.addEventListener('click', () => {
-                navMenu.classList.toggle('nav__list--active');
-                navToggle.setAttribute('aria-expanded', 
-                    navToggle.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
-            });
-        }
-
-        // Close menu when a link is clicked
-        const navLinks = document.querySelectorAll('.nav__link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('nav__list--active');
-                navToggle.setAttribute('aria-expanded', 'false');
-            });
-        });
-    </script>
-
+    document.querySelectorAll('.fade-in, .section__title, .section__subtitle').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
 </body>
+
 </html>
