@@ -408,8 +408,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-
-
 // Enhanced header scroll effect that works with color transitions
 function updateHeaderShadow() {
     const header = document.querySelector('.header');
@@ -598,11 +596,6 @@ formControls.forEach(control => {
         this.parentElement.classList.remove('focused');
     });
 });
-
-// Typewriter effect for hero subtitle (disabled to maintain clean design)
-// This has been removed to keep the sophisticated, minimal aesthetic
-
-
 
 // Lazy loading implementation
 function setupLazyLoading() {
