@@ -188,6 +188,7 @@
           -webkit-font-smoothing: antialiased;
           box-sizing: border-box;
           scroll-behavior: smooth;
+          overflow-x: hidden;
         }
 
         /* Dynamic color properties for pseudo-elements */
@@ -204,6 +205,16 @@
           background-color: #ffffff;
           color: #000000;
           transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          overflow-x: hidden;
+          width: 100%;
+          max-width: 100vw;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+        }
+
+        main {
+          flex: 1;
         }
 
         /* Transition states for all text elements */
@@ -220,6 +231,16 @@
         *::before,
         *::after {
           box-sizing: inherit;
+        }
+
+        /* Prevent horizontal overflow globally */
+        body, main, section, div, article, aside, header, footer, nav {
+          max-width: 100vw;
+        }
+
+        img, video, iframe, embed, object {
+          max-width: 100%;
+          height: auto;
         }
 
         /* Typography */
@@ -417,11 +438,19 @@
         /* Container layout */
         .container {
           width: 100%;
+          max-width: var(--container-lg);
           margin-right: auto;
           margin-left: auto;
           padding-right: var(--space-16);
           padding-left: var(--space-16);
-          max-width: var(--container-lg);
+          box-sizing: border-box;
+        }
+
+        /* Projects section - reduced lateral padding for more space */
+        #projects .container {
+          padding-right: var(--space-8);
+          padding-left: var(--space-8);
+          max-width: 100%;
         }
 
         /* Animation Preferences - Enhanced */
@@ -491,9 +520,15 @@
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        .initials.logo-img {
+          width: auto;
+          height: 40px;
+          transition: filter 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         .full-name {
           position: absolute;
-          left: 50px;
+          left: 60px;
           top: 50%;
           transform: translateY(-50%);
           font-size: var(--font-size-base);
@@ -502,13 +537,21 @@
           letter-spacing: var(--letter-spacing-tight);
           opacity: 0;
           white-space: nowrap;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1); /* smooth reveal -> changed from 0.3s to 0.7s*/
           color: #000000;
+          max-width: calc(100vw - 100px);
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
         .logo-text:hover .initials {
           color: var(--color-primary);
           transform: translateX(2px);
+        }
+
+        .logo-text:hover .initials.logo-img {
+          transform: translateX(2px);
+          opacity: 0.8;
         }
 
         .logo-text:hover .full-name {
@@ -571,15 +614,19 @@
           position: relative;
           transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           padding-left: 0;
-          padding-top: 150px; /* Fixed alignment - increased from 80px */
+          padding-top: 120px;
+          padding-bottom: 80px;
+          box-sizing: border-box;
         }
 
         .hero__content {
           position: relative;
           z-index: 2;
           width: 100%;
+          max-width: 100%;
           padding-left: clamp(40px, 5vw, 80px);
           padding-right: clamp(40px, 5vw, 80px);
+          box-sizing: border-box;
         }
 
         .hero__title {
@@ -637,6 +684,9 @@
         .section {
           padding: 140px 0;
           margin: 0;
+          width: 100%;
+          max-width: 100vw;
+          box-sizing: border-box;
         }
 
         .section:first-of-type {
@@ -833,10 +883,19 @@
 
         /* Footer */
         .footer {
-          background: #ffffff;
+          background: transparent;
           padding: var(--space-32) 0;
-          border-top: none;
+          border-top: 1px solid rgba(0, 0, 0, 0.1);
           transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          position: relative;
+          z-index: 10;
+          width: 100%;
+          max-width: 100vw;
+          display: block;
+          visibility: visible;
+          opacity: 1;
+          margin-top: auto;
+          min-height: 80px;
         }
 
         .footer__content {
@@ -848,7 +907,7 @@
         }
 
         .footer__text {
-          color: #333333;
+          color: #000000;
           font-size: var(--font-size-sm);
           transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -860,7 +919,7 @@
         }
 
         .footer__links a {
-          color: #333333;
+          color: #000000;
           position: relative;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -896,6 +955,20 @@
         .fade-in.animate-in {
           opacity: 1;
           transform: translateY(0);
+        }
+
+        /* Footer should always be visible */
+        .footer .fade-in {
+          opacity: 1 !important;
+          transform: translateY(0) !important;
+          visibility: visible !important;
+        }
+
+        /* Ensure footer is always visible and not hidden */
+        .footer {
+          display: block !important;
+          visibility: visible !important;
+          opacity: 1 !important;
         }
 
         .stagger-1 { transition-delay: 0.1s; }
@@ -1083,8 +1156,10 @@
           letter-spacing: -0.02em;
           line-height: 0.9;
           text-align: left;
-          max-width: none;
+          max-width: 100%;
           width: 100%;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
           transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
@@ -1093,25 +1168,23 @@
           top: 0;
         }
 
-        /* Hero section with proper spacing */
-        .hero {
-          padding-top: 150px; /* Consistent spacing for proper alignment */
-        }
 
         /* Left-Aligned Typography - Much Larger Scale */
         .hero__flat-text {
           font-family: var(--font-family-base);
-          font-size: clamp(48px, 12vw, 120px);
+          font-size: clamp(40px, 10vw, 100px);
           font-weight: 700;
           margin: 0;
           padding: 0;
           color: #000000;
           text-transform: uppercase;
           letter-spacing: -0.02em;
-          line-height: 0.85;
+          line-height: 0.9;
           text-align: left;
-          max-width: none;
+          max-width: 100%;
           width: 100%;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
           transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -1449,6 +1522,7 @@
           border-radius: var(--radius-base);
           padding: var(--space-8);
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          max-width: calc(100vw - var(--space-24) * 2);
         }
 
         .sidebar-content {
@@ -1487,36 +1561,318 @@
           transform: translateX(-2px);
         }
 
-        /* Visual Separators - Removed for Seamless Design */
-        .section {
-          /* No borders for fluid design */
-        }
 
         /* Portfolio Grid Styles */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            max-width: 1200px;
+            gap: 3rem;
+            max-width: 100%;
+            width: 100%;
             margin: 0 auto;
+            box-sizing: border-box;
+            padding: 0 var(--space-16);
         }
 
         .project-box {
             background-color: #2a2a2a;
-            min-height: 240px;
+            min-height: 400px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: var(--radius-base);
+            border-radius: 0;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
 
         .project-box:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 4px 32px rgba(0, 0, 0, 0.35);
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 8px 48px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Global color change on project hover - Base transition */
+        body.project-hover-active {
+            transition: background-color 0.5s ease-in,
+                        color 0.8s ease-out;
+        }
+
+        /* Apply smooth transitions to all elements that change color */
+        body.project-hover-active *,
+        body.project-hover-1 *,
+        body.project-hover-2 *,
+        body.project-hover-3 *,
+        body.project-hover-4 *,
+        body.project-hover-5 *,
+        body.project-hover-6 * {
+            transition: background-color 0.8s ease-out,
+                        color 0.8s ease-out,
+                        filter 0.8s ease-out;
+        }
+
+        /* Project 1 - Beige */
+        body.project-hover-1,
+        body.project-hover-1 .header,
+        body.project-hover-1 .hero,
+        body.project-hover-1 .section,
+        body.project-hover-1 .footer {
+            background-color: #c6c4b9 !important;
+        }
+
+        body.project-hover-1 .hero__flat-text,
+        body.project-hover-1 .nav__brand,
+        body.project-hover-1 .nav__link,
+        body.project-hover-1 .section__title,
+        body.project-hover-1 .footer__text,
+        body.project-hover-1 .footer__links a,
+        body.project-hover-1 .contact-link,
+        body.project-hover-1 .contact-statement,
+        body.project-hover-1 h1,
+        body.project-hover-1 h2,
+        body.project-hover-1 h3,
+        body.project-hover-1 h4,
+        body.project-hover-1 p,
+        body.project-hover-1 .content-column h3,
+        body.project-hover-1 .content-column p,
+        body.project-hover-1 .current-project-content h3,
+        body.project-hover-1 .current-project-content p,
+        body.project-hover-1 .about-opening-statement,
+        body.project-hover-1 .info-block h4,
+        body.project-hover-1 .experience-title,
+        body.project-hover-1 .experience-subtitle,
+        body.project-hover-1 .expertise-column h3,
+        body.project-hover-1 .expertise-description,
+        body.project-hover-1 .expertise-list li {
+            color: #000000 !important;
+        }
+
+        body.project-hover-1 .initials.logo-img {
+            filter: none !important;
+        }
+
+        body.project-hover-1 .project-box {
+            background-color: #cccac0 !important;
+        }
+
+        /* Project 2 - Dark Gray */
+        body.project-hover-2,
+        body.project-hover-2 .header,
+        body.project-hover-2 .hero,
+        body.project-hover-2 .section,
+        body.project-hover-2 .footer {
+            background-color: #2b2e2e !important;
+        }
+
+        body.project-hover-2 .hero__flat-text,
+        body.project-hover-2 .nav__brand,
+        body.project-hover-2 .nav__link,
+        body.project-hover-2 .section__title,
+        body.project-hover-2 .footer__text,
+        body.project-hover-2 .footer__links a,
+        body.project-hover-2 .contact-link,
+        body.project-hover-2 .contact-statement,
+        body.project-hover-2 h1,
+        body.project-hover-2 h2,
+        body.project-hover-2 h3,
+        body.project-hover-2 h4,
+        body.project-hover-2 p,
+        body.project-hover-2 .content-column h3,
+        body.project-hover-2 .content-column p,
+        body.project-hover-2 .current-project-content h3,
+        body.project-hover-2 .current-project-content p,
+        body.project-hover-2 .about-opening-statement,
+        body.project-hover-2 .info-block h4,
+        body.project-hover-2 .experience-title,
+        body.project-hover-2 .experience-subtitle,
+        body.project-hover-2 .expertise-column h3,
+        body.project-hover-2 .expertise-description,
+        body.project-hover-2 .expertise-list li {
+            color: #ffffff !important;
+        }
+
+        body.project-hover-2 .initials.logo-img {
+            filter: invert(1) brightness(1.2) !important;
+        }
+
+        body.project-hover-2 .project-box {
+            background-color: #414343 !important;
+        }
+
+        /* Project 3 - Cyan Blue */
+        body.project-hover-3,
+        body.project-hover-3 .header,
+        body.project-hover-3 .hero,
+        body.project-hover-3 .section,
+        body.project-hover-3 .footer {
+            background-color: #07b0f3 !important;
+        }
+
+        body.project-hover-3 .hero__flat-text,
+        body.project-hover-3 .nav__brand,
+        body.project-hover-3 .nav__link,
+        body.project-hover-3 .section__title,
+        body.project-hover-3 .footer__text,
+        body.project-hover-3 .footer__links a,
+        body.project-hover-3 .contact-link,
+        body.project-hover-3 .contact-statement,
+        body.project-hover-3 h1,
+        body.project-hover-3 h2,
+        body.project-hover-3 h3,
+        body.project-hover-3 h4,
+        body.project-hover-3 p,
+        body.project-hover-3 .content-column h3,
+        body.project-hover-3 .content-column p,
+        body.project-hover-3 .current-project-content h3,
+        body.project-hover-3 .current-project-content p,
+        body.project-hover-3 .about-opening-statement,
+        body.project-hover-3 .info-block h4,
+        body.project-hover-3 .experience-title,
+        body.project-hover-3 .experience-subtitle,
+        body.project-hover-3 .expertise-column h3,
+        body.project-hover-3 .expertise-description,
+        body.project-hover-3 .expertise-list li {
+            color: #000000 !important;
+        }
+
+        body.project-hover-3 .initials.logo-img {
+            filter: none !important;
+        }
+
+        body.project-hover-3 .project-box {
+            background-color: #20b8f4 !important;
+        }
+
+        /* Project 4 - Dark Red */
+        body.project-hover-4,
+        body.project-hover-4 .header,
+        body.project-hover-4 .hero,
+        body.project-hover-4 .section,
+        body.project-hover-4 .footer {
+            background-color: #941608 !important;
+        }
+
+        body.project-hover-4 .hero__flat-text,
+        body.project-hover-4 .nav__brand,
+        body.project-hover-4 .nav__link,
+        body.project-hover-4 .section__title,
+        body.project-hover-4 .footer__text,
+        body.project-hover-4 .footer__links a,
+        body.project-hover-4 .contact-link,
+        body.project-hover-4 .contact-statement,
+        body.project-hover-4 h1,
+        body.project-hover-4 h2,
+        body.project-hover-4 h3,
+        body.project-hover-4 h4,
+        body.project-hover-4 p,
+        body.project-hover-4 .content-column h3,
+        body.project-hover-4 .content-column p,
+        body.project-hover-4 .current-project-content h3,
+        body.project-hover-4 .current-project-content p,
+        body.project-hover-4 .about-opening-statement,
+        body.project-hover-4 .info-block h4,
+        body.project-hover-4 .experience-title,
+        body.project-hover-4 .experience-subtitle,
+        body.project-hover-4 .expertise-column h3,
+        body.project-hover-4 .expertise-description,
+        body.project-hover-4 .expertise-list li {
+            color: #ffffff !important;
+        }
+
+        body.project-hover-4 .initials.logo-img {
+            filter: invert(1) brightness(1.2) !important;
+        }
+
+        body.project-hover-4 .project-box {
+            background-color: #9f2e21 !important;
+        }
+
+        /* Project 5 - Dark Gray/Black */
+        body.project-hover-5,
+        body.project-hover-5 .header,
+        body.project-hover-5 .hero,
+        body.project-hover-5 .section,
+        body.project-hover-5 .footer {
+            background-color: #222222 !important;
+        }
+
+        body.project-hover-5 .hero__flat-text,
+        body.project-hover-5 .nav__brand,
+        body.project-hover-5 .nav__link,
+        body.project-hover-5 .section__title,
+        body.project-hover-5 .footer__text,
+        body.project-hover-5 .footer__links a,
+        body.project-hover-5 .contact-link,
+        body.project-hover-5 .contact-statement,
+        body.project-hover-5 h1,
+        body.project-hover-5 h2,
+        body.project-hover-5 h3,
+        body.project-hover-5 h4,
+        body.project-hover-5 p,
+        body.project-hover-5 .content-column h3,
+        body.project-hover-5 .content-column p,
+        body.project-hover-5 .current-project-content h3,
+        body.project-hover-5 .current-project-content p,
+        body.project-hover-5 .about-opening-statement,
+        body.project-hover-5 .info-block h4,
+        body.project-hover-5 .experience-title,
+        body.project-hover-5 .experience-subtitle,
+        body.project-hover-5 .expertise-column h3,
+        body.project-hover-5 .expertise-description,
+        body.project-hover-5 .expertise-list li {
+            color: #ffffff !important;
+        }
+
+        body.project-hover-5 .initials.logo-img {
+            filter: invert(1) brightness(1.2) !important;
+        }
+
+        body.project-hover-5 .project-box {
+            background-color: #393939 !important;
+        }
+
+        /* Project 6 - Yellow/Green */
+        body.project-hover-6,
+        body.project-hover-6 .header,
+        body.project-hover-6 .hero,
+        body.project-hover-6 .section,
+        body.project-hover-6 .footer {
+            background-color: #e6e147 !important;
+        }
+
+        body.project-hover-6 .hero__flat-text,
+        body.project-hover-6 .nav__brand,
+        body.project-hover-6 .nav__link,
+        body.project-hover-6 .section__title,
+        body.project-hover-6 .footer__text,
+        body.project-hover-6 .footer__links a,
+        body.project-hover-6 .contact-link,
+        body.project-hover-6 .contact-statement,
+        body.project-hover-6 h1,
+        body.project-hover-6 h2,
+        body.project-hover-6 h3,
+        body.project-hover-6 h4,
+        body.project-hover-6 p,
+        body.project-hover-6 .content-column h3,
+        body.project-hover-6 .content-column p,
+        body.project-hover-6 .current-project-content h3,
+        body.project-hover-6 .current-project-content p,
+        body.project-hover-6 .about-opening-statement,
+        body.project-hover-6 .info-block h4,
+        body.project-hover-6 .experience-title,
+        body.project-hover-6 .experience-subtitle,
+        body.project-hover-6 .expertise-column h3,
+        body.project-hover-6 .expertise-description,
+        body.project-hover-6 .expertise-list li {
+            color: #000000 !important;
+        }
+
+        body.project-hover-6 .initials.logo-img {
+            filter: none !important;
+        }
+
+        body.project-hover-6 .project-box {
+            background-color: #e9e45a !important;
         }
 
         .project-text {
@@ -1561,8 +1917,24 @@
         /* Tablet responsive */
         @media (max-width: 1024px) {
             .portfolio-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+            }
+            
+            .project-box {
+                min-height: 350px;
+            }
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .project-box {
+                min-height: 300px;
             }
         }
 
@@ -1633,10 +2005,17 @@
           .hero__content {
             padding-left: var(--space-16);
             padding-right: var(--space-16);
+            max-width: 100%;
+            box-sizing: border-box;
           }
 
           .hero__flat-text {
             font-size: clamp(36px, 10vw, 72px);
+            max-width: 100%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            padding: 0 var(--space-16);
+            box-sizing: border-box;
           }
 
           .logo-ticker {
@@ -1649,11 +2028,18 @@
           }
 
           .header {
-            top: 32px;
+            top: 0;
           }
 
           .hero {
-            padding-top: 120px;
+            padding-top: 0;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+          }
+          
+          .hero__content {
+            width: 100%;
           }
 
           .hero__actions {
@@ -1677,8 +2063,17 @@
           }
 
           .portfolio-grid {
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
+            max-width: 100%;
+            width: 100%;
+          }
+          
+          .project-box {
+            aspect-ratio: 1;
+            min-height: 0;
+            height: 100%;
+            width: 100%;
           }
 
           .current-projects {
@@ -1706,6 +2101,7 @@
             transform: none;
             margin: var(--space-32) auto;
             width: fit-content;
+            max-width: 100%;
           }
           
           /* Improved mobile navigation */
@@ -1744,10 +2140,46 @@
 
           .footer__content {
             text-align: center;
+            flex-direction: column;
+            gap: var(--space-16);
           }
 
           .footer__links {
             justify-content: center;
+            flex-wrap: wrap;
+          }
+
+          .footer {
+            padding: var(--space-24) 0;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: relative !important;
+            z-index: 10 !important;
+            margin-top: var(--space-40);
+            background: transparent !important;
+          }
+
+          .footer .fade-in {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            visibility: visible !important;
+          }
+
+          /* Ensure footer is not hidden by any other element */
+          body {
+            padding-bottom: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+          }
+
+          main {
+            flex: 1;
+          }
+
+          .footer {
+            margin-top: auto;
           }
 
           .data-table {

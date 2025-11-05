@@ -101,56 +101,81 @@ function updateScrollColors() {
         transitionFactor
     );
 
-    // Update body background
-    document.body.style.backgroundColor = backgroundColor;
-
-    // Update all text elements
-    const textElements = [
-        '.nav__brand', '.nav__link', '.hero__flat-text', 
-        '.content-column h3', '.content-column p', '.info-value', '.contact-statement',
-        '.contact-link', '.footer__text', '.footer__links a', '.section__title',
-        '.data-table td', '.expertise-list li', '.current-project-content h3', '.about-opening-statement'
-    ];
-
-    textElements.forEach(selector => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(el => {
-            el.style.color = textColor;
-        });
-    });
-
-    // Update flat text color
-    const flatText = document.querySelector('.hero__flat-text');
-    if (flatText) {
-        flatText.style.color = textColor;
+    // Update body background (only if not in project hover state)
+    const hasProjectHover = document.body.classList.contains('project-hover-active') ||
+                             document.body.classList.contains('project-hover-1') ||
+                             document.body.classList.contains('project-hover-2') ||
+                             document.body.classList.contains('project-hover-3') ||
+                             document.body.classList.contains('project-hover-4') ||
+                             document.body.classList.contains('project-hover-5') ||
+                             document.body.classList.contains('project-hover-6');
+    
+    if (!hasProjectHover) {
+        document.body.style.backgroundColor = backgroundColor;
     }
 
-    // Update accent color elements
-    const accentElements = [
-        '.ticker-item', '.info-label', '.table-container h3',
-        '.info-block h4', '.expertise-column h3', '.expertise-column h5', 
-        '.data-table th', '.current-project-content p', '.experience-subtitle',
-        '.experience-period', '.expertise-description', '.affiliation-type'
-    ];
+    // Update all text elements (only if not in project hover state)
+    if (!hasProjectHover) {
+        const textElements = [
+            '.nav__brand', '.nav__link', '.hero__flat-text', 
+            '.content-column h3', '.content-column p', '.info-value', '.contact-statement',
+            '.contact-link', '.footer__text', '.footer__links a', '.section__title',
+            '.data-table td', '.expertise-list li', '.current-project-content h3', '.about-opening-statement'
+        ];
 
-    accentElements.forEach(selector => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(el => {
-            el.style.color = accentColor;
+        textElements.forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(el => {
+                el.style.color = textColor;
+            });
         });
-    });
+    }
 
-    // Update background elements
-    const backgroundElements = [
-        '.header', '.logo-ticker', '.hero', '.contact-sidebar', '.footer'
-    ];
+    // Update flat text color (only if not in project hover state)
+    if (!hasProjectHover) {
+        const flatText = document.querySelector('.hero__flat-text');
+        if (flatText) {
+            flatText.style.color = textColor;
+        }
 
-    backgroundElements.forEach(selector => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(el => {
-            el.style.backgroundColor = backgroundColor;
+        // Update accent color elements
+        const accentElements = [
+            '.ticker-item', '.info-label', '.table-container h3',
+            '.info-block h4', '.expertise-column h3', '.expertise-column h5', 
+            '.data-table th', '.current-project-content p', '.experience-subtitle',
+            '.experience-period', '.expertise-description', '.affiliation-type'
+        ];
+
+        accentElements.forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(el => {
+                el.style.color = accentColor;
+            });
         });
-    });
+    }
+
+    // Update background elements (only if not in project hover state)
+    if (!hasProjectHover) {
+        const backgroundElements = [
+            '.header', '.logo-ticker', '.hero', '.contact-sidebar', '.footer'
+        ];
+
+        backgroundElements.forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(el => {
+                el.style.backgroundColor = backgroundColor;
+            });
+        });
+    }
+
+    // Update footer border color based on background
+    const footer = document.querySelector('.footer');
+    if (footer) {
+        const borderColor = transitionFactor > 0.5 ? 
+            `rgba(255, 255, 255, 0.2)` : 
+            `rgba(0, 0, 0, 0.1)`;
+        footer.style.borderTopColor = borderColor;
+    }
 
     // Update minimal borders (only where essential)
     const borderAlpha = transitionFactor > 0.5 ? 0.1 : 0.05;
@@ -170,14 +195,26 @@ function updateScrollColors() {
         });
     });
 
-    // Update logo text colors during transitions - TEXT VERSION
-    const initials = document.querySelector('.initials');
-    const fullName = document.querySelector('.full-name');
-    
-    if (initials && fullName) {
-        // Update initials and full name colors
-        initials.style.color = textColor;
-        fullName.style.color = textColor;
+    // Update logo image filter during transitions - invert to white when background is dark
+    // (only if not in project hover state, hover state handles logo separately)
+    if (!hasProjectHover) {
+        const logoImg = document.querySelector('.initials.logo-img');
+        const fullName = document.querySelector('.full-name');
+        
+        if (logoImg) {
+            // Apply invert filter when background is dark (transitionFactor > 0.5)
+            // This makes the black logo appear white on dark background
+            if (transitionFactor > 0.5) {
+                logoImg.style.filter = 'invert(1) brightness(1)';
+            } else {
+                logoImg.style.filter = 'none';
+            }
+        }
+        
+        // Update full name color
+        if (fullName) {
+            fullName.style.color = textColor;
+        }
     }
 
     // Update CSS custom properties for pseudo-elements and button states
@@ -283,12 +320,19 @@ function toggleAbout() {
         // Hide about page, show home sections
         aboutSection.style.display = 'none';
         aboutSection.setAttribute('aria-hidden', 'true');
+        const heroSection = document.querySelector('#home');
+        
         homeElements.forEach(el => {
             if (el) {
                 el.style.display = 'block';
                 el.removeAttribute('aria-hidden');
             }
         });
+        
+        // Force hero section to maintain flex layout for proper centering
+        if (heroSection) {
+            heroSection.style.display = 'flex';
+        }
         
         // Update button text and accessibility
         navButton.textContent = 'ABOUT';
@@ -316,12 +360,21 @@ function toggleAbout() {
 function goHome() {
     const aboutSection = document.querySelector('.about-page');
     const homeElements = document.querySelectorAll('#home, #projects, #current, #contact');
+    const heroSection = document.querySelector('#home');
     
     // Always show homepage, hide about page
     aboutSection.style.display = 'none';
     homeElements.forEach(el => {
-        if (el) el.style.display = 'block';
+        if (el) {
+            el.style.display = 'block';
+            el.removeAttribute('aria-hidden');
+        }
     });
+    
+    // Force hero section to maintain flex layout
+    if (heroSection) {
+        heroSection.style.display = 'flex';
+    }
     
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -397,7 +450,13 @@ const animatedElements = document.querySelectorAll(
 );
 
 animatedElements.forEach(el => {
-    observer.observe(el);
+    // Skip footer fade-in - it should always be visible
+    if (!el.closest('.footer')) {
+        observer.observe(el);
+    } else {
+        // Force footer to be visible immediately
+        el.classList.add('animate-in');
+    }
 });
 
 // Project cards with staggered animation
@@ -483,32 +542,42 @@ if (contactSidebar && window.innerWidth <= 768) {
     });
 }
 
-// Enhanced parallax effect that works with color transitions
-let parallaxTicking = false;
-
-function updateParallax() {
-    const scrolled = window.pageYOffset;
-    const parallaxElements = document.querySelectorAll('.hero__content');
-    
-    parallaxElements.forEach(element => {
-        const speed = 0.3;
-        element.style.transform = `translateY(${scrolled * speed}px)`;
-    });
-    
-    parallaxTicking = false;
-}
-
-function requestParallaxUpdate() {
-    if (!parallaxTicking) {
-        requestAnimationFrame(updateParallax);
-        parallaxTicking = true;
+// Parallax effect disabled - removed for normal scrolling behavior
+// Reset any existing transform on hero content
+document.addEventListener('DOMContentLoaded', () => {
+    const heroContent = document.querySelector('.hero__content');
+    if (heroContent) {
+        heroContent.style.transform = 'none';
     }
-}
-
-// Only add parallax if user hasn't requested reduced motion
-if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    window.addEventListener('scroll', requestParallaxUpdate);
-}
+    
+    // Project hover effect - global color change with different colors per project
+    const projectBoxes = document.querySelectorAll('.project-box');
+    
+    projectBoxes.forEach((box, index) => {
+        const projectNumber = index + 1; // 1-6
+        
+        box.addEventListener('mouseenter', () => {
+            // Remove all project hover classes first
+            document.body.classList.remove('project-hover-1', 'project-hover-2', 'project-hover-3', 
+                                          'project-hover-4', 'project-hover-5', 'project-hover-6');
+            // Add the specific project hover class
+            document.body.classList.add(`project-hover-${projectNumber}`);
+            document.body.classList.add('project-hover-active');
+            // Pause scroll-based color updates while hovering
+        });
+        
+        box.addEventListener('mouseleave', () => {
+            // Remove all project hover classes
+            document.body.classList.remove('project-hover-1', 'project-hover-2', 'project-hover-3',
+                                          'project-hover-4', 'project-hover-5', 'project-hover-6');
+            document.body.classList.remove('project-hover-active');
+            // Resume scroll-based color updates
+            setTimeout(() => {
+                updateScrollColors();
+            }, 100);
+        });
+    });
+});
 
 // Enhanced form interactions (if form exists)
 const formControls = document.querySelectorAll('.form-control');
@@ -641,6 +710,12 @@ document.addEventListener('DOMContentLoaded', () => {
     setupLazyLoading();
     setupKeyboardNavigation();
     setupImageErrorHandling();
+    
+    // Ensure footer is always visible
+    const footerFadeIn = document.querySelector('.footer .fade-in');
+    if (footerFadeIn) {
+        footerFadeIn.classList.add('animate-in');
+    }
     
     // Mark performance milestone
     if ('performance' in window) {
