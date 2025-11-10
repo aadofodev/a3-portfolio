@@ -46,6 +46,7 @@ const colorConfig = {
     endPercentage: 75
 };
 
+
 // Utility function to interpolate between two colors
 function interpolateColor(color1, color2, factor) {
     // Parse hex colors
@@ -70,19 +71,80 @@ function interpolateColor(color1, color2, factor) {
 function updateScrollColors() {
     const scrollTop = window.pageYOffset;
     const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercentage = (scrollTop / documentHeight) * 100;
-
-    // Calculate transition factor
+    
+    // Check if About section is visible
+    const aboutSection = document.querySelector('.about-page');
+    const isAboutVisible = aboutSection && aboutSection.style.display !== 'none' && aboutSection.offsetParent !== null;
+    
     let transitionFactor = 0;
-    if (scrollPercentage >= colorConfig.startPercentage && scrollPercentage <= colorConfig.endPercentage) {
-        transitionFactor = (scrollPercentage - colorConfig.startPercentage) / 
-                            (colorConfig.endPercentage - colorConfig.startPercentage);
-    } else if (scrollPercentage > colorConfig.endPercentage) {
-        transitionFactor = 1;
-    }
+    
+    if (isAboutVisible) {
+        // Calculate transition within About section
+        const aboutHeroStatement = document.querySelector('.about-hero-statement');
+        const aboutContentSections = document.querySelectorAll('.about-section');
+        const firstAboutSection = aboutContentSections.length > 0 ? aboutContentSections[0] : null;
+        
+        if (aboutHeroStatement && firstAboutSection) {
+            const heroStatementTop = aboutHeroStatement.offsetTop;
+            const heroStatementBottom = heroStatementTop + aboutHeroStatement.offsetHeight;
+            const contentSectionTop = firstAboutSection.offsetTop;
+            
+            // Start transition from the bottom of the hero statement
+            const transitionStart = heroStatementBottom;
+            // Complete transition when reaching the first content section
+            const transitionEnd = contentSectionTop;
+            const transitionRange = transitionEnd - transitionStart;
+            
+            if (transitionRange > 0 && scrollTop >= transitionStart && scrollTop <= transitionEnd) {
+                // Transition from 0 to 1 between hero statement and content section
+                transitionFactor = (scrollTop - transitionStart) / transitionRange;
+            } else if (scrollTop > transitionEnd) {
+                // Already black when past content section
+                transitionFactor = 1;
+            } else {
+                // White when at or before hero statement
+                transitionFactor = 0;
+            }
+            
+            // Smooth easing function
+            transitionFactor = transitionFactor * transitionFactor * (3 - 2 * transitionFactor);
+        } else {
+            // If elements not found, keep white
+            transitionFactor = 0;
+        }
+    } else {
+        // Calculate transition based on hero and projects section positions (normal portfolio behavior)
+        const heroSection = document.querySelector('#home');
+        const projectsSection = document.querySelector('#projects');
+        let actualStartPercentage = 0; // Start from the beginning
+        let actualEndPercentage = colorConfig.endPercentage;
+        
+        if (heroSection && projectsSection) {
+            const projectsTop = projectsSection.offsetTop;
+            
+            // Start transition from the very beginning (top of page)
+            actualStartPercentage = 0;
+            // Complete transition exactly when reaching projects section
+            // This ensures the transition happens entirely in the hero section
+            actualEndPercentage = Math.min(100, (projectsTop / documentHeight) * 100);
+        }
+        
+        const scrollPercentage = (scrollTop / documentHeight) * 100;
 
-    // Smooth easing function
-    transitionFactor = transitionFactor * transitionFactor * (3 - 2 * transitionFactor);
+        // Calculate transition factor
+        transitionFactor = 0;
+        if (scrollPercentage >= actualStartPercentage && scrollPercentage <= actualEndPercentage) {
+            // Transition from 0 to 1 between start and projects section
+            transitionFactor = (scrollPercentage - actualStartPercentage) / 
+                                (actualEndPercentage - actualStartPercentage);
+        } else if (scrollPercentage > actualEndPercentage) {
+            // Already black when past projects section
+            transitionFactor = 1;
+        }
+
+        // Smooth easing function
+        transitionFactor = transitionFactor * transitionFactor * (3 - 2 * transitionFactor);
+    }
 
     // Interpolate colors
     const backgroundColor = interpolateColor(
@@ -298,6 +360,9 @@ function toggleAbout() {
         
         // Scroll to about section
         aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        // Force white background immediately when About section is shown
+        updateScrollColors();
         
         // Focus management
         setTimeout(() => {
@@ -549,7 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Project hover effect - global color change with different colors per project
-    const projectBoxes = document.querySelectorAll('.project-box');
+    const projectBoxes = document.querySelectorAll('.project-box, .card.portfolio-item');
     
     projectBoxes.forEach((box, index) => {
         const projectNumber = index + 1; // 1-6
@@ -652,37 +717,51 @@ let cursor = null;
 
 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && window.innerWidth > 768) {
     cursor = document.createElement('div');
-    cursor.style.cssText = `
-        position: fixed;
-        width: 20px;
-        height: 20px;
-        border: 2px solid var(--color-primary);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999;
-        transition: transform 0.1s ease, border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        opacity: 0;
-    `;
+    cursor.className = 'custom-cursor';
     document.body.appendChild(cursor);
+    document.body.classList.add('custom-cursor-active');
     
+    // Update cursor position
     document.addEventListener('mousemove', (e) => {
         if (cursor) {
-            cursor.style.left = e.clientX - 10 + 'px';
-            cursor.style.top = e.clientY - 10 + 'px';
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
             cursor.style.opacity = '1';
         }
     });
     
-    // Enhanced cursor for interactive elements
-    const interactiveElements = document.querySelectorAll('a, button, .project-card, .nav__brand');
-    interactiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            if (cursor) cursor.style.transform = 'scale(1.5)';
-        });
-        el.addEventListener('mouseleave', () => {
-            if (cursor) cursor.style.transform = 'scale(1)';
-        });
+    // Hide cursor when mouse leaves window
+    document.addEventListener('mouseleave', () => {
+        if (cursor) cursor.style.opacity = '0';
     });
+    
+    document.addEventListener('mouseenter', () => {
+        if (cursor) cursor.style.opacity = '1';
+    });
+    
+    // Detect pointer elements and add pulse animation
+    const checkPointerElement = (e) => {
+        if (!cursor) return;
+        
+        const target = e.target;
+        // Check if element is interactive
+        const isInteractive = target.tagName === 'A' || 
+                             target.tagName === 'BUTTON' ||
+                             (target.hasAttribute('role') && target.getAttribute('role') === 'button') ||
+                             (target.hasAttribute('tabindex') && target.getAttribute('tabindex') === '0') ||
+                             target.closest('a, button, [role="button"], .card.portfolio-item, .nav__brand') ||
+                             target.closest('[onclick]') ||
+                             window.getComputedStyle(target).cursor === 'pointer';
+        
+        if (isInteractive) {
+            cursor.classList.add('pulse');
+        } else {
+            cursor.classList.remove('pulse');
+        }
+    };
+    
+    // Check on mouse move
+    document.addEventListener('mousemove', checkPointerElement);
     
     // Update cursor color during scroll transitions
     const originalHandleScroll = handleScroll;

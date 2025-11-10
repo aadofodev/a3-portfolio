@@ -191,6 +191,22 @@
           overflow-x: hidden;
         }
 
+        /* Hide default cursor only when custom cursor is active */
+        body.custom-cursor-active {
+          cursor: none;
+        }
+        
+        /* Hide cursor on all interactive elements too */
+        body.custom-cursor-active a,
+        body.custom-cursor-active button,
+        body.custom-cursor-active .card,
+        body.custom-cursor-active .portfolio-item,
+        body.custom-cursor-active .nav__brand,
+        body.custom-cursor-active [role="button"],
+        body.custom-cursor-active [tabindex="0"] {
+          cursor: none;
+        }
+
         /* Dynamic color properties for pseudo-elements */
         :root {
           --dynamic-text-color: #000000;
@@ -1188,11 +1204,170 @@
           transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* Scroll Indicator */
+        .scroll-indicator {
+          position: relative;
+          margin-top: 80px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          opacity: 0;
+          animation: fadeInUp 0.8s var(--ease-smooth) 0.8s forwards;
+        }
+
+        .scroll-line {
+          width: 2px;
+          height: 60px;
+          background: linear-gradient(to bottom, 
+            transparent 0%, 
+            currentColor 20%, 
+            currentColor 80%, 
+            transparent 100%);
+          position: relative;
+          overflow: hidden;
+          animation: scrollLineMove 2s ease-in-out infinite;
+          transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-line::before {
+          content: '';
+          position: absolute;
+          top: -100%;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: currentColor;
+          animation: scrollLineSlide 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollLineMove {
+          0% {
+            opacity: 0.6;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0.6;
+          }
+        }
+
+        @keyframes scrollLineSlide {
+          0% {
+            top: -100%;
+            opacity: 0;
+          }
+          50% {
+            top: 0%;
+            opacity: 1;
+          }
+          100% {
+            top: 100%;
+            opacity: 0;
+          }
+        }
+
         /* Section Headers - Clean, No Underlines for Seamless Design */
         .section__title.underlined {
           position: relative;
           display: inline-block;
           margin-bottom: var(--space-60);
+        }
+
+        /* CURRENTLY Title - Geometric Sans Serif with Outline */
+        .section__title.underlined.currently-title {
+          font-family: 'Arial Black';
+          font-weight: 400; /* Bebas Neue is already bold by default */
+          letter-spacing: 0.1em;
+          -webkit-text-stroke: 3px currentColor;
+          -webkit-text-fill-color: transparent;
+          color: transparent;
+          font-size: clamp(72px, 12vw, 140px);
+          line-height: 1;
+          position: relative;
+          left: 0;
+          margin-left: 0;
+          padding-left: 30px;
+        }
+
+        /* Align CURRENTLY section header to left edge of viewport */
+        #current .section__header {
+          position: relative;
+          left: calc(-50vw + 50%);
+          width: 100vw;
+          padding-left: var(--space-16);
+          margin-left: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        /* CURRENTLY Gradient Box - Vanta.js Fog background */
+        .currently-gradient-box {
+          padding: var(--space-40) var(--space-60);
+          border-radius: 0;
+          position: relative;
+          min-height: 400px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          width: calc(100% - 60px);
+          max-width: calc(100vw - 60px);
+          margin-top: -85px;
+          margin-left: 30px;
+          margin-right: 30px;
+          box-sizing: border-box;
+          z-index: 1;
+        }
+        
+        /* Ensure CURRENTLY title is behind the gradient box */
+        .section__title.underlined.currently-title {
+          position: relative;
+          z-index: 0;
+        }
+        
+        /* Ensure Vanta canvas covers the entire div */
+        .currently-gradient-box canvas {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 0;
+        }
+        
+        /* Content above Vanta canvas */
+        .currently-gradient-box h3,
+        .currently-gradient-box p {
+          position: relative;
+          z-index: 1;
+          transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Super-bold compact font for h3 */
+        .currently-gradient-box h3 {
+          font-family: 'Oswald', 'Arial Black', 'Arial Bold', sans-serif;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+          text-transform: uppercase;
+          line-height: 1.2;
+          font-size: clamp(32px, 5vw, 56px);
+          margin-bottom: var(--space-16);
+          color: #ffffff;
+        }
+        
+        /* Outline style for paragraph (like CURRENTLY) */
+        .currently-gradient-box p {
+          font-family: 'Arial Black', 'Arial Bold', sans-serif;
+          font-weight: 400;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          font-size: clamp(16px, 2.5vw, 24px);
+          line-height: 1;
+          -webkit-text-stroke: 1px #ffffff;
+          -webkit-text-fill-color: transparent;
+          color: transparent;
         }
 
         /* Two-Column Layout */
@@ -1574,6 +1749,159 @@
             padding: 0 var(--space-16);
         }
 
+        /* New Card Animation Styles */
+        .card.portfolio-item {
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+            background: #2a2a2a;
+            border-radius: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 14px 26px rgba(0,0,0,0.04);
+            transition: all 0.3s ease-out;
+            text-decoration: none;
+        }
+        
+        /* Center circle independently from text */
+        .card.portfolio-item .circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Color variants for each card type */
+        .card.portfolio-item.education {
+            --bg-color: #ffd861;
+            --bg-color-light: #ffeeba;
+            --text-color-hover: #4C5656;
+            --box-shadow-color: rgba(255, 215, 97, 0.48);
+        }
+
+        .card.portfolio-item.credentialing {
+            --bg-color: #B8F9D3;
+            --bg-color-light: #e2fced;
+            --text-color-hover: #4C5656;
+            --box-shadow-color: rgba(184, 249, 211, 0.48);
+        }
+
+        .card.portfolio-item.wallet {
+            --bg-color: #CEB2FC;
+            --bg-color-light: #F0E7FF;
+            --text-color-hover: #fff;
+            --box-shadow-color: rgba(206, 178, 252, 0.48);
+        }
+
+        .card.portfolio-item.human-resources {
+            --bg-color: #DCE9FF;
+            --bg-color-light: #f1f7ff;
+            --text-color-hover: #4C5656;
+            --box-shadow-color: rgba(220, 233, 255, 0.48);
+        }
+
+        .card.portfolio-item:hover {
+            transform: translateY(-5px) scale(1.005) translateZ(0);
+            box-shadow: 0 24px 36px rgba(0,0,0,0.11),
+                0 24px 46px var(--box-shadow-color);
+        }
+
+        .card.portfolio-item:hover .overlay {
+            width: 100%;
+            height: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 0;
+        }
+
+        .card.portfolio-item:hover .circle {
+            border-color: var(--bg-color-light);
+            background: var(--bg-color);
+            transform: translate(-50%, -50%);
+        }
+
+        .card.portfolio-item:hover .circle:after {
+            background: var(--bg-color-light);
+        }
+
+        .card.portfolio-item:hover p {
+            color: var(--text-color-hover);
+        }
+
+        .card.portfolio-item:active {
+            transform: scale(1) translateZ(0);
+            box-shadow: 0 15px 24px rgba(0,0,0,0.11),
+                0 15px 24px var(--box-shadow-color);
+        }
+
+        .card.portfolio-item p {
+            font-size: 17px;
+            color: #ffffff;
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            transition: color 0.3s ease-out;
+            font-family: var(--font-family-base);
+            font-weight: var(--font-weight-semibold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin: 0;
+            text-align: center;
+        }
+
+        .card.portfolio-item .overlay {
+            width: 118px;
+            position: absolute; 
+            height: 118px;
+            border-radius: 50%;
+            background: var(--bg-color);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            transition: all 0.3s ease-out;
+        }
+
+        .card.portfolio-item .circle {
+            width: 131px;
+            height: 131px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            transition: all 0.3s ease-out;
+        }
+
+        .card.portfolio-item .circle:after {
+            content: "";
+            width: 118px;
+            height: 118px;
+            display: block;
+            position: absolute;
+            background: var(--bg-color);
+            border-radius: 50%;
+            top: 7px;
+            left: 7px;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .card.portfolio-item .circle svg {
+            z-index: 10000;
+            transform: translateZ(0);
+            position: relative;
+        }
+
+        /* Legacy support for project-box class */
         .project-box {
             background-color: #2a2a2a;
             min-height: 400px;
@@ -1585,11 +1913,6 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-        }
-
-        .project-box:hover {
-            transform: translateY(-12px) scale(1.03);
-            box-shadow: 0 8px 48px rgba(0, 0, 0, 0.4);
         }
 
         /* Global color change on project hover - Base transition */
@@ -1651,7 +1974,8 @@
             filter: none !important;
         }
 
-        body.project-hover-1 .project-box {
+        body.project-hover-1 .project-box,
+        body.project-hover-1 .card.portfolio-item {
             background-color: #cccac0 !important;
         }
 
@@ -1695,7 +2019,8 @@
             filter: invert(1) brightness(1.2) !important;
         }
 
-        body.project-hover-2 .project-box {
+        body.project-hover-2 .project-box,
+        body.project-hover-2 .card.portfolio-item {
             background-color: #414343 !important;
         }
 
@@ -1739,7 +2064,8 @@
             filter: none !important;
         }
 
-        body.project-hover-3 .project-box {
+        body.project-hover-3 .project-box,
+        body.project-hover-3 .card.portfolio-item {
             background-color: #20b8f4 !important;
         }
 
@@ -1783,7 +2109,8 @@
             filter: invert(1) brightness(1.2) !important;
         }
 
-        body.project-hover-4 .project-box {
+        body.project-hover-4 .project-box,
+        body.project-hover-4 .card.portfolio-item {
             background-color: #9f2e21 !important;
         }
 
@@ -1827,7 +2154,8 @@
             filter: invert(1) brightness(1.2) !important;
         }
 
-        body.project-hover-5 .project-box {
+        body.project-hover-5 .project-box,
+        body.project-hover-5 .card.portfolio-item {
             background-color: #393939 !important;
         }
 
@@ -1871,7 +2199,8 @@
             filter: none !important;
         }
 
-        body.project-hover-6 .project-box {
+        body.project-hover-6 .project-box,
+        body.project-hover-6 .card.portfolio-item {
             background-color: #e9e45a !important;
         }
 
@@ -1921,6 +2250,7 @@
                 gap: 2rem;
             }
             
+            .card,
             .project-box {
                 min-height: 350px;
             }
@@ -1933,6 +2263,7 @@
                 gap: 2rem;
             }
             
+            .card,
             .project-box {
                 min-height: 300px;
             }
@@ -1945,6 +2276,7 @@
           -webkit-backface-visibility: hidden;
         }
         
+        .card,
         .project-box {
           will-change: transform;
           backface-visibility: hidden;
@@ -1952,6 +2284,7 @@
         }
         
         /* Throttle hover effects for performance */
+        .card:hover,
         .project-box:hover {
           transition: transform var(--duration-normal) var(--ease-standard),
                       box-shadow var(--duration-normal) var(--ease-standard);
@@ -2196,4 +2529,38 @@
           font-family: 'FKGroteskNeue';
           src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2')
             format('woff2');
+        }
+
+        /* Custom cursor pulse animation */
+        .custom-cursor {
+          position: fixed;
+          width: 20px;
+          height: 20px;
+          border: 2px solid var(--color-primary);
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 9999;
+          transition: transform 0.1s ease, border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+          opacity: 0;
+          transform: translate(-50%, -50%);
+        }
+
+        /* Enhanced pulse with shadow for interactive elements */
+        .custom-cursor.pulse {
+          animation: cursorPulseWithShadow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes cursorPulseWithShadow {
+          0%, 100% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            box-shadow: 0 0 0 0 rgba(33, 140, 158, 0.5),
+                        0 0 0 0 rgba(33, 140, 158, 0.3);
+          }
+          50% {
+            transform: translate(-50%, -50%) scale(1.4);
+            opacity: 0.9;
+            box-shadow: 0 0 0 12px rgba(33, 140, 158, 0),
+                        0 0 0 24px rgba(33, 140, 158, 0);
+          }
         }
