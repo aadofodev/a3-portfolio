@@ -361,6 +361,27 @@ function toggleAbout() {
         // Scroll to about section
         aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         
+        // Initialize Vanta.js TOPOLOGY for affiliations when section is shown
+        setTimeout(() => {
+            const affiliationsVanta = document.getElementById('affiliations-vanta');
+            if (affiliationsVanta && !affiliationsVanta.querySelector('canvas')) {
+                if (typeof VANTA !== 'undefined' && VANTA.TOPOLOGY) {
+                    VANTA.TOPOLOGY({
+                        el: "#affiliations-vanta",
+                        mouseControls: true,
+                        touchControls: true,
+                        gyroControls: false,
+                        minHeight: 200.00,
+                        minWidth: 200.00,
+                        scale: 1.00,
+                        scaleMobile: 1.00,
+                        color: 0xffffff,
+                        backgroundColor: 0x0
+                    });
+                }
+            }
+        }, 100);
+        
         // Force white background immediately when About section is shown
         updateScrollColors();
         
@@ -478,13 +499,38 @@ function updateHeaderShadow() {
     const header = document.querySelector('.header');
     const scrollY = window.scrollY;
     const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercentage = (scrollY / documentHeight) * 100;
     
-    if (scrollY > 100) {
-        if (scrollPercentage > colorConfig.endPercentage) {
-            header.style.boxShadow = '0 2px 20px rgba(255,255,255,0.1)';
+    // Use the same logic as updateScrollColors to determine when background is dark
+    const heroSection = document.querySelector('#home');
+    const projectsSection = document.querySelector('#projects');
+    let transitionFactor = 0;
+    
+    if (heroSection && projectsSection) {
+        const projectsTop = projectsSection.offsetTop;
+        const scrollPercentage = (scrollY / documentHeight) * 100;
+        const actualEndPercentage = Math.min(100, (projectsTop / documentHeight) * 100);
+        
+        // Calculate transition factor (same as in updateScrollColors)
+        if (scrollPercentage >= 0 && scrollPercentage <= actualEndPercentage) {
+            transitionFactor = scrollPercentage / actualEndPercentage;
+        } else if (scrollPercentage > actualEndPercentage) {
+            transitionFactor = 1;
+        }
+        
+        // Smooth easing function
+        transitionFactor = transitionFactor * transitionFactor * (3 - 2 * transitionFactor);
+    }
+    
+    if (scrollY > 50) {
+        // Interpolate shadow opacity based on transition factor
+        // When background is dark (transitionFactor > 0), show white shadow
+        const whiteShadowOpacity = transitionFactor * 0.1;
+        const blackShadowOpacity = (1 - transitionFactor) * 0.1;
+        
+        if (transitionFactor > 0) {
+            header.style.boxShadow = `0 2px 20px rgba(255,255,255,${whiteShadowOpacity})`;
         } else {
-            header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            header.style.boxShadow = `0 2px 20px rgba(0,0,0,${blackShadowOpacity})`;
         }
     } else {
         header.style.boxShadow = 'none';
