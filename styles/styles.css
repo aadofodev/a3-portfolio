@@ -234,7 +234,7 @@
         }
 
         /* Transition states for all text elements */
-        h1, h2, h3, h4, h5, h6, p, a, .nav__link, .ticker-item, .section__title, .hero__currently, .hero__statement, .hero__description, .info-value, .info-label, .contact-link, .footer__text {
+        h1, h2, h3, h4, h5, h6, p, a, .nav__link, .ticker-item, .section__title, .hero__statement, .hero__description, .info-value, .info-label, .contact-link, .footer__text {
           transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -630,7 +630,7 @@
           position: relative;
           transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           padding-left: 0;
-          padding-top: 120px;
+          padding-top: 220px;
           padding-bottom: 80px;
           box-sizing: border-box;
         }
@@ -1207,7 +1207,7 @@
         /* Scroll Indicator */
         .scroll-indicator {
           position: relative;
-          margin-top: 80px;
+          margin-top: 200px;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -1272,116 +1272,6 @@
           position: relative;
           display: inline-block;
           margin-bottom: var(--space-60);
-        }
-
-        /* CURRENTLY Title - Geometric Sans Serif with Outline */
-        .section__title.underlined.currently-title {
-          font-family: 'Arial Black';
-          font-weight: 400; /* Bebas Neue is already bold by default */
-          letter-spacing: 0.1em;
-          -webkit-text-stroke: 3px currentColor;
-          -webkit-text-fill-color: transparent;
-          color: transparent;
-          font-size: clamp(72px, 12vw, 140px);
-          line-height: 1;
-          position: relative;
-          left: 0;
-          margin-left: 0;
-          padding-left: 30px;
-        }
-
-        /* Align CURRENTLY section header to left edge of viewport */
-        #current .section__header {
-          position: relative;
-          left: calc(-50vw + 50%);
-          width: 100vw;
-          padding-left: var(--space-16);
-          margin-left: 0;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-        }
-
-        /* CURRENTLY Gradient Box - Vanta.js Fog background */
-        .currently-gradient-box {
-          padding: var(--space-40) var(--space-60);
-          border-radius: 0;
-          position: relative;
-          min-height: 400px;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: flex-start;
-          width: calc(100% - 60px);
-          max-width: calc(100vw - 60px);
-          margin-top: -85px;
-          margin-left: 30px;
-          margin-right: 30px;
-          box-sizing: border-box;
-          z-index: 1;
-        }
-        
-        /* Ensure CURRENTLY title is behind the gradient box */
-        .section__title.underlined.currently-title {
-          position: relative;
-          z-index: 0;
-        }
-        
-        /* Ensure Vanta canvas covers the entire div */
-        .currently-gradient-box canvas {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          z-index: 0;
-        }
-        
-        /* Content above Vanta canvas */
-        .currently-gradient-box h3,
-        .currently-gradient-box p {
-          position: relative;
-          z-index: 1;
-          transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        /* Super-bold compact font for h3 */
-        .currently-gradient-box h3 {
-          font-family: 'Oswald', 'Arial Black', 'Arial Bold', sans-serif;
-          font-weight: 700;
-          letter-spacing: -0.02em;
-          text-transform: uppercase;
-          line-height: 1.2;
-          font-size: clamp(32px, 5vw, 56px);
-          margin-bottom: var(--space-16);
-          color: #ffffff;
-        }
-        
-        /* Outline style for paragraph (like CURRENTLY) */
-        .currently-gradient-box p {
-          font-family: 'Arial Black', 'Arial Bold', sans-serif;
-          font-weight: 400;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          font-size: clamp(16px, 2.5vw, 24px);
-          line-height: 1;
-          -webkit-text-stroke: 1px #ffffff;
-          -webkit-text-fill-color: transparent;
-          color: transparent;
-        }
-        
-        /* @unibz label in bottom right corner */
-        .currently-gradient-box .unibz-label {
-          position: absolute;
-          bottom: var(--space-20);
-          right: var(--space-32);
-          font-family: 'Oswald', 'Arial Black', 'Arial Bold', sans-serif;
-          font-weight: 700;
-          font-size: clamp(14px, 2vw, 20px);
-          color: #ffffff;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          z-index: 2;
         }
 
         /* Two-Column Layout */
@@ -1976,132 +1866,6 @@
             transition: all 0.3s ease-out;
             filter: grayscale(100%) brightness(0.7);
         }
-        
-        .card.portfolio-item:hover .card-hover-image {
-            width: 100%;
-            height: 100%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 1;
-        }
-        
-        /* Color mask overlay for images - creates color tinted shades */
-        .card.portfolio-item .card-image-mask {
-            position: absolute;
-            width: 0;
-            height: 0;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: transparent;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 1;
-            transition: all 0.3s ease-out;
-            mix-blend-mode: color;
-        }
-        
-        .card.portfolio-item:hover .card-image-mask {
-            width: 100%;
-            height: 100%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 1;
-        }
-        
-        /* Card 1 - education (first) */
-        .portfolio-grid > .card.portfolio-item.education:nth-child(1) .card-image-mask {
-            background-color: #a4a398;
-        }
-        
-        /* Card 2 - credentialing (first) */
-        .portfolio-grid > .card.portfolio-item.credentialing:nth-child(2) .card-image-mask {
-            background-color: #313634;
-        }
-        
-        /* Card 3 - wallet */
-        .card.portfolio-item.wallet .card-image-mask {
-            background-color: #f2fe00;
-        }
-        
-        /* Card 4 - human-resources */
-        .card.portfolio-item.human-resources .card-image-mask {
-            background-color: #961c0c;
-        }
-        
-        /* Card 5 - education (second) */
-        .portfolio-grid > .card.portfolio-item.education:nth-child(5) .card-image-mask {
-            background-color: #c9ad42;
-        }
-        
-        /* Card 6 - credentialing (second) */
-        .portfolio-grid > .card.portfolio-item.credentialing:nth-child(6) .card-image-mask {
-            background-color: #fff242;
-        }
-
-        /* Card numbers - styled like CURRENTLY */
-        .card.portfolio-item .card-number {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: 'Arial Black', 'Arial Bold', sans-serif;
-            font-weight: 400;
-            font-size: clamp(80px, 12vw, 140px);
-            letter-spacing: 0.1em;
-            -webkit-text-stroke: 2px #ffffff;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-            line-height: 1;
-            z-index: 2;
-            pointer-events: none;
-            opacity: 1;
-            transition: opacity 0.3s ease-out;
-        }
-        
-        .card.portfolio-item:hover .card-number {
-            opacity: 0;
-        }
-
-        .card.portfolio-item:hover p {
-            opacity: 0;
-            transition: opacity 0.3s ease-out;
-        }
-        
-        .card.portfolio-item p {
-            opacity: 1;
-            transition: opacity 0.3s ease-out;
-        }
-
-        .card.portfolio-item:active {
-            transform: scale(1) translateZ(0);
-            box-shadow: 0 15px 24px rgba(0,0,0,0.11),
-                0 15px 24px var(--box-shadow-color);
-        }
-
-        .card.portfolio-item p {
-            font-size: 17px;
-            color: #ffffff;
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            transition: color 0.3s ease-out;
-            font-family: var(--font-family-base);
-            font-weight: var(--font-weight-semibold);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin: 0;
-            text-align: center;
-        }
-
-        .card.portfolio-item .overlay {
-            display: none;
-        }
-
 
         /* Legacy support for project-box class */
         .project-box {
@@ -2616,71 +2380,7 @@
             height: 100%;
             width: 100%;
           }
-          
-          .project-box {
-            aspect-ratio: 1;
-            min-height: 0;
-            height: 100%;
-            width: 100%;
-          }
-
-          .current-projects {
-            text-align: center;
-          }
-
-          .current-project-content h3 {
-            font-size: var(--font-size-lg);
-          }
-
-          /* CURRENTLY section mobile adjustments */
-          #current .section__header {
-            left: 0 !important;
-            width: 100% !important;
-            max-width: 100vw !important;
-            padding-left: var(--space-16) !important;
-            padding-right: var(--space-16) !important;
-            box-sizing: border-box !important;
-            overflow: hidden !important;
-          }
-
-          .section__title.underlined.currently-title {
-            font-size: clamp(32px, 9vw, 52px) !important;
-            padding-left: 0 !important;
-            padding-right: var(--space-16) !important;
-            -webkit-text-stroke: 2px currentColor !important;
-            max-width: 100% !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-            white-space: nowrap !important;
-            letter-spacing: 0.03em !important;
-          }
-
-          .currently-gradient-box {
-            padding: var(--space-24) var(--space-20) !important;
-            min-height: 300px !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            margin-top: -40px !important;
-            margin-left: 0 !important;
-            margin-right: 0 !important;
-          }
-
-          .currently-gradient-box h3 {
-            font-size: clamp(24px, 6vw, 32px) !important;
-            margin-bottom: var(--space-12) !important;
-          }
-
-          .currently-gradient-box p {
-            font-size: clamp(12px, 3vw, 16px) !important;
-            line-height: 1.3 !important;
-          }
-
-          .currently-gradient-box .unibz-label {
-            bottom: var(--space-12) !important;
-            right: var(--space-16) !important;
-            font-size: var(--font-size-xs) !important;
-          }
-
+      
           .expertise-grid-simple {
             grid-template-columns: 1fr;
             gap: var(--space-20);
@@ -2828,3 +2528,54 @@
                         0 0 0 24px rgba(33, 140, 158, 0);
           }
         }
+
+/* --- NEW HUB STYLES (Paste at bottom) --- */
+.assignments-hub {
+    padding: 4rem 1.5rem;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-white, #fff); /* Fallback to white */
+    border-top: 1px solid #eee;
+    margin-bottom: 100px;
+}
+
+.hub-container { text-align: center; max-width: 800px; }
+
+.hub-label {
+    font-family: monospace;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    color: #888;
+    display: block;
+    margin-bottom: 1.5rem;
+}
+
+.hub-title {
+    font-size: 3rem;
+    line-height: 1;
+    margin-bottom: 2rem;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.hub-desc {
+    font-size: 1.1rem;
+    color: #555;
+    max-width: 500px;
+    margin: 0 auto 3rem auto;
+    line-height: 1.6;
+}
+
+.hub-btn {
+    display: inline-flex; align-items: center; gap: 15px;
+    padding: 20px 40px;
+    background-color: #000; color: #fff;
+    text-decoration: none; text-transform: uppercase; 
+    font-weight: bold; letter-spacing: 1px;
+    border-radius: 50px;
+    transition: transform 0.3s ease;
+}
+
+.hub-btn:hover { transform: translateY(-5px); }

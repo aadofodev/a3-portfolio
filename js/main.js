@@ -341,7 +341,8 @@ document.addEventListener('visibilitychange', () => {
 function toggleAbout() {
     const aboutSection = document.querySelector('.about-page');
     const homeElements = document.querySelectorAll('#home, #projects, #current, #contact');
-    const navButton = document.querySelector('.nav-button');
+    // Looks for the specific ID first
+    const navButton = document.getElementById('about-btn') || document.querySelector('.nav-button');
     const mainContent = document.querySelector('#main-content');
     
     if (aboutSection.style.display === 'none' || !aboutSection.style.display) {

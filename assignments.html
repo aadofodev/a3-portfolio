@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Archive | A3</title>
+    <link rel="preload" href="https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <style>
+        /* --- CORE VARIABLES --- */
+        :root {
+            --bg-color: #f3f3f3;
+            --text-color: #111111;
+            --grid-line: #cccccc;
+            --overlay-bg: #ffffff;
+            --font-main: 'FKGroteskNeue', Helvetica, Arial, sans-serif;
+        }
+
+        @font-face {
+            font-family: 'FKGroteskNeue';
+            src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2') format('woff2');
+            font-display: swap;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        button { cursor: pointer; font-family: inherit; }
+        .hidden { display: none !important; }
+
+        /* --- 1. COURSE DIRECTORY --- */
+        #course-directory { max-width: 1000px; margin: 100px auto; padding: 0 20px; }
+        .directory-header { font-size: 0.9rem; letter-spacing: 2px; color: #888; margin-bottom: 40px; border-bottom: 1px solid #000; padding-bottom: 10px; }
+        .course-item { border-bottom: 1px solid var(--grid-line); }
+        .course-btn { width: 100%; text-align: left; background: none; border: none; padding: 30px 0; font-size: clamp(2rem, 4vw, 3.5rem); text-transform: uppercase; font-weight: 400; display: flex; justify-content: space-between; align-items: center; transition: color 0.3s; }
+        .course-btn:hover { color: #555; }
+        .course-btn::after { content: '+'; font-weight: 300; }
+        .course-item.active .course-btn::after { content: '-'; }
+        .nested-options { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; background: #e6e6e6; }
+        .course-item.active .nested-options { max-height: 300px; }
+        .sub-link { display: block; padding: 20px 40px; font-size: 1.2rem; text-transform: uppercase; text-decoration: none; color: var(--text-color); border-bottom: 1px solid #ccc; letter-spacing: 1px; cursor: pointer; transition: background 0.2s, padding-left 0.2s; }
+        .sub-link:hover { background: #dcdcdc; padding-left: 50px; }
+
+        /* --- 2. GRID INTERFACE --- */
+        .sticky-header { position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; padding: 20px 30px; background: rgba(243, 243, 243, 0.95); border-bottom: 1px solid var(--text-color); z-index: 50; backdrop-filter: blur(8px); }
+        .nav-btn { background: none; border: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-btn:hover { opacity: 0.6; }
+        #grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); border-left: 1px solid var(--grid-line); }
+        .grid-item { aspect-ratio: 1; background: var(--overlay-bg); border-right: 1px solid var(--grid-line); border-bottom: 1px solid var(--grid-line); padding: 30px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: background-color 0.2s ease; }
+        .grid-item:hover { background-color: #f0f0f0; }
+        .item-title { font-size: 2rem; line-height: 1; font-weight: 400; margin: 0; text-transform: uppercase; }
+        .item-meta { font-size: 0.85rem; text-transform: uppercase; padding-top: 15px; border-top: 1px solid #eee; color: #555; }
+
+        /* --- 3. DETAIL OVERLAY --- */
+        #focus-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--overlay-bg); z-index: 100; transform: translateY(100%); opacity: 0; transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.5s ease; overflow-y: auto; }
+        #focus-overlay.active { transform: translateY(0); opacity: 1; }
+        #close-overlay { position: fixed; top: 25px; right: 30px; background: var(--text-color); color: var(--overlay-bg); border: none; padding: 10px 20px; font-weight: bold; z-index: 101; }
+        #focus-content { max-width: 900px; margin: 100px auto; padding: 0 30px; padding-bottom: 100px; }
+        
+        .process-step { margin-bottom: 60px; }
+        .process-step h3 { font-size: 1.5rem; text-transform: uppercase; border-bottom: 2px solid var(--text-color); display: inline-block; padding-bottom: 5px; margin-bottom: 20px; }
+        .process-step p { font-size: 1.25rem; line-height: 1.6; color: #333; max-width: 700px; }
+
+        /* PDF BUTTON STYLE */
+        .pdf-btn {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 15px 30px;
+            background-color: #000;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 1px solid #000;
+            transition: all 0.3s;
+        }
+        .pdf-btn:hover {
+            background-color: #fff;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="course-directory">
+        <div class="directory-header">SELECT A COURSE</div>
+
+        <div class="course-item">
+            <button class="course-btn" onclick="toggleAccordion(this)">Human Computer Interaction</button>
+            <div class="nested-options">
+                <div class="sub-link" onclick="loadCourse('hci', 'individual')">Individual Assignments (5)</div>
+            </div>
+        </div>
+
+        <div class="course-item">
+            <button class="course-btn" onclick="toggleAccordion(this)">Management of Digital Business</button>
+            <div class="nested-options">
+                <div class="sub-link" onclick="loadCourse('mdb', 'individual')">View Assignments</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 100px;">
+            <a href="index.html" style="color: #666; text-decoration: none; font-size: 0.9rem; letter-spacing: 2px;">← RETURN TO PORTFOLIO</a>
+        </div>
+    </div>
+
+    <div id="main-interface" class="hidden">
+        <header class="sticky-header">
+            <button id="back-to-courses" class="nav-btn">← COURSES</button>
+            <div id="view-label">ARCHIVE</div>
+            <div style="width: 60px;"></div>
+        </header>
+        <main id="grid-container"></main>
+    </div>
+
+    <div id="focus-overlay">
+        <button id="close-overlay">CLOSE [ESC]</button>
+        <div id="focus-content"></div>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const DATA = {
+            hci: {
+                name: "HCI",
+                individual: [
+                    { 
+                        id: "HCI-01", 
+                        title: "Show & Tell 1", 
+                        category: "Individual",
+                        file: "documents/hci_individual_assignment_1.pdf", 
+                        content: { 
+                            intro: "Scroll Less, Think More: Addressing the polarization and lack of productive discourse on current social media platforms.", 
+                            steps: [
+                                { title: "The Frustration", text: "Current engagement metrics (likes, shares) reward emotional intensity over quality. This design choice creates echo chambers where users perform for reactions rather than engage in genuine dialogue." },
+                                { title: "Concept: Discourse Mode", text: "A proposed interface 'mode' designed for respectful debate. Features include perspective indicators, contextual summaries, and a reputation system based on thoughtfulness rather than popularity." }
+                            ] 
+                        } 
+                    },
+                    { 
+                        id: "HCI-02", 
+                        title: "Show & Tell 2", 
+                        category: "Individual",
+                        file: "documents/hci_individual_assignment_2.pdf", 
+                        content: { 
+                            intro: "Communicating Identity Through Web Design: An analysis of how visuals, structure, and tone reflect the person behind the interface.", 
+                            steps: [
+                                { title: "Good Communication", text: "Analyzed Richard Stallman's site. While visually 'brutalist,' it perfectly communicates his utilitarian philosophy. It proves that 'good' design is subjective and must connect authentically with its intended audience." },
+                                { title: "Poor Communication", text: "Analyzed the Patimex website as a counter-example. Its sparse information and inconsistent visual hierarchy create a confusing experience that fails to build trust or clearly state the company's purpose." }
+                            ] 
+                        } 
+                    },
+                    { 
+                        id: "HCI-03", 
+                        title: "Personal Website: Prototype", 
+                        category: "Individual",
+                        file: "documents/hci_individual_assignment_3.pdf", 
+                        content: { 
+                            intro: "Translating identity and values into an intentional, usable interface. The concept centers on 'Bridging Disciplines'—combining technical expertise with business acumen.", 
+                            steps: [
+                                { title: "Identity Expression", text: "The visual identity uses a geometric AAA logo and scroll-triggered color transitions (light to dark) to metaphorically represent transformation and the connection between distinct domains." },
+                                { title: "UX/UI Strategy", text: "Prioritized a single-page narrative flow with bold typography and sophisticated white space. Key interactions include 0.3s hover animations for professional feedback and a clean layout to demonstrate attention to detail." }
+                            ] 
+                        } 
+                    },
+                    { 
+                        id: "HCI-04", 
+                        title: "Personal Website: Development", 
+                        category: "Individual",
+                        file: "documents/hci_individual_assignment_4.pdf", 
+                        content: { 
+                            intro: "From concept to code: A production-ready portfolio that embodies the 'bridge-connector' identity through minimalist design and sophisticated interactions.", 
+                            steps: [
+                                { title: "Technical Implementation", text: "Built using semantic HTML5 and CSS3 with a focus on progressive enhancement. Integrated Vanta.js for the dynamic 'fog' background to visualize the bridge metaphor, while ensuring the site remains functional on all devices." },
+                                { title: "Reflection", text: "Learned that authenticity comes from alignment between identity and behavior. The scroll-triggered color transitions and geometric logo are not just decoration, but functional elements that reinforce the narrative of bridging distinct disciplines." }
+                            ] 
+                        } 
+                    },
+                    { 
+                        id: "HCI-05", 
+                        title: "Personal Website: User Feedback", 
+                        category: "Individual",
+                        file: "documents/hci_individual_assignment_5.pdf", 
+                        content: { 
+                            intro: "Refining the user experience through iterative testing with diverse user groups (Hiring Manager, Technical Peer, Client). The focus was on identifying friction points and enhancing usability.", 
+                            steps: [
+                                { title: "Feedback Strategy", text: "Conducted testing with four distinct personas to cover different use cases: technical assessment (Peer), hiring speed (Recruiter), and service discovery (Client). They identified critical issues with mobile responsiveness and brand clarity." },
+                                { title: "Critical Iterations", text: "Based on HCI principles, I implemented three key fixes: 1) Added a fluid mobile layout with media queries to ensure accessibility. 2) Fixed broken scroll anchors to stabilize navigation. 3) Introduced a 'Scroll Indicator' affordance to guide user attention below the fold." }
+                            ] 
+                        } 
+                    }
+                ]
+            },
+            mdb: {
+                name: "DIGITAL BIZ",
+                individual: [
+                    { id: "MDB-01", title: "Business Model", category: "Strategy", file: "", content: { intro: "Spotify Analysis.", steps: [] } }
+                ]
+            }
+        };
+
+        // --- DOM & LOGIC ---
+        const courseDir = document.getElementById('course-directory');
+        const mainInterface = document.getElementById('main-interface');
+        const gridContainer = document.getElementById('grid-container');
+        const overlay = document.getElementById('focus-overlay');
+        const focusContent = document.getElementById('focus-content');
+        const viewLabel = document.getElementById('view-label');
+
+        function toggleAccordion(btn) {
+            const item = btn.parentElement;
+            document.querySelectorAll('.course-item').forEach(el => { if(el !== item) el.classList.remove('active'); });
+            item.classList.toggle('active');
+        }
+
+        function loadCourse(courseId, type) {
+            const courseData = DATA[courseId];
+            const items = courseData[type];
+            if (!items) return;
+
+            courseDir.classList.add('hidden');
+            mainInterface.classList.remove('hidden');
+            viewLabel.textContent = `${courseData.name} // ARCHIVE`;
+            
+            gridContainer.innerHTML = '';
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'grid-item';
+                card.innerHTML = `
+                    <div style="font-family:monospace; color:#888;">${item.id}</div>
+                    <h2 class="item-title">${item.title}</h2>
+                    <div class="item-meta">${item.category}</div>
+                `;
+                card.addEventListener('click', () => openDetail(item));
+                gridContainer.appendChild(card);
+            });
+        }
+
+        document.getElementById('back-to-courses').addEventListener('click', () => {
+            mainInterface.classList.add('hidden');
+            courseDir.classList.remove('hidden');
+        });
+
+        // --- UPDATED DETAIL VIEW ---
+        function openDetail(item) {
+            let html = `
+                <div class="detail-header">
+                    <h1 style="font-size: clamp(2.5rem, 5vw, 5rem); margin: 0 0 20px 0; line-height: 0.9; text-transform: uppercase;">${item.title}</h1>
+                    <p style="font-size:1.5rem; margin-bottom:40px;">${item.content.intro}</p>
+                </div>
+            `;
+            
+            if (item.content.steps) {
+                item.content.steps.forEach(step => {
+                    html += `<div class="process-step"><h3>${step.title}</h3><p>${step.text}</p></div>`;
+                });
+            }
+
+            // PDF BUTTON LOGIC
+            if (item.file && item.file !== "") {
+                html += `
+                    <div style="border-top: 1px solid #ccc; padding-top: 40px; margin-top: 60px;">
+                        <p style="font-family: monospace; color: #666; margin-bottom: 10px;">ATTACHMENT</p>
+                        <a href="${item.file}" target="_blank" class="pdf-btn">
+                            VIEW FULL DOCUMENT ↗
+                        </a>
+                    </div>
+                `;
+            }
+
+            focusContent.innerHTML = html;
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        document.getElementById('close-overlay').addEventListener('click', () => {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') document.getElementById('close-overlay').click();
+        });
+    </script>
+</body>
+</html>
