@@ -14,6 +14,8 @@
             --grid-line: #cccccc;
             --overlay-bg: #ffffff;
             --font-main: 'FKGroteskNeue', Helvetica, Arial, sans-serif;
+            --neon-purple: #b026ff;
+            --neon-blue: #00f0ff;
         }
 
         @font-face {
@@ -47,43 +49,112 @@
         .sub-link { display: block; padding: 20px 40px; font-size: 1.2rem; text-transform: uppercase; text-decoration: none; color: var(--text-color); border-bottom: 1px solid #ccc; letter-spacing: 1px; cursor: pointer; transition: background 0.2s, padding-left 0.2s; }
         .sub-link:hover { background: #dcdcdc; padding-left: 50px; }
 
-        /* --- 2. GRID INTERFACE --- */
+        /* --- 2. COMMON HEADER --- */
         .sticky-header { position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; padding: 20px 30px; background: rgba(243, 243, 243, 0.95); border-bottom: 1px solid var(--text-color); z-index: 50; backdrop-filter: blur(8px); }
         .nav-btn { background: none; border: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         .nav-btn:hover { opacity: 0.6; }
+
+        /* --- 3. STANDARD GRID (For Individual) --- */
         #grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); border-left: 1px solid var(--grid-line); }
         .grid-item { aspect-ratio: 1; background: var(--overlay-bg); border-right: 1px solid var(--grid-line); border-bottom: 1px solid var(--grid-line); padding: 30px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: background-color 0.2s ease; }
         .grid-item:hover { background-color: #f0f0f0; }
         .item-title { font-size: 2rem; line-height: 1; font-weight: 400; margin: 0; text-transform: uppercase; }
         .item-meta { font-size: 0.85rem; text-transform: uppercase; padding-top: 15px; border-top: 1px solid #eee; color: #555; }
 
-        /* --- 3. DETAIL OVERLAY --- */
-        #focus-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--overlay-bg); z-index: 100; transform: translateY(100%); opacity: 0; transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.5s ease; overflow-y: auto; }
+        /* --- 4. BENTO GRID (For Group Project) --- */
+        .beacon-layout {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .bento-row {
+            display: flex;
+            min-height: 80vh; /* Full viewport height feeling */
+            border-bottom: 1px solid var(--text-color);
+        }
+
+        .text-col, .img-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px;
+            box-sizing: border-box;
+        }
+
+        .img-col {
+            background-color: #e0e0e0;
+            padding: 0;
+            overflow: hidden;
+            border-left: 1px solid var(--text-color);
+        }
+
+        .img-col img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .img-col:hover img { transform: scale(1.03); }
+
+        /* Zig-Zag Logic: Flip every even row */
+        .bento-row:nth-child(even) { flex-direction: row-reverse; }
+        .bento-row:nth-child(even) .img-col { border-left: none; border-right: 1px solid var(--text-color); }
+
+        /* Content Styling */
+        .beacon-label { font-family: monospace; color: #666; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        .beacon-heading { font-size: clamp(2.5rem, 4vw, 4rem); line-height: 1; margin-bottom: 30px; text-transform: uppercase; }
+        .beacon-body { font-size: 1.2rem; line-height: 1.6; color: #333; max-width: 600px; }
+        .highlight { font-weight: bold; color: #000; border-bottom: 1px solid #000; }
+
+        /* SPECIAL CELL: DARK MODE (Development) */
+        .dark-mode-cell {
+            background-color: #050505;
+            color: #fff;
+        }
+        .dark-mode-cell .beacon-label { color: var(--neon-blue); }
+        .dark-mode-cell .beacon-body { color: #ccc; }
+        .dark-mode-cell .highlight { color: #fff; border-bottom-color: var(--neon-purple); }
+
+        /* SPECIAL CELL: FULL WIDTH (Final) */
+        .final-row {
+            flex-direction: column;
+            min-height: auto;
+            padding: 100px 30px;
+            text-align: center;
+            align-items: center;
+        }
+        .final-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 60px;
+            width: 100%;
+            max-width: 1400px;
+        }
+        .final-img { width: 100%; height: auto; border: 1px solid #ccc; }
+
+        @media (max-width: 900px) {
+            .bento-row, .bento-row:nth-child(even) { flex-direction: column; }
+            .img-col { min-height: 300px; border-left: none; border-right: none; border-top: 1px solid #000; }
+            .text-col { padding: 40px 20px; }
+            .final-grid { grid-template-columns: 1fr; }
+        }
+
+        /* --- 5. DETAIL OVERLAY (Existing) --- */
+        #focus-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--overlay-bg); z-index: 100; transform: translateY(100%); opacity: 0; transition: transform 0.5s; overflow-y: auto; }
         #focus-overlay.active { transform: translateY(0); opacity: 1; }
         #close-overlay { position: fixed; top: 25px; right: 30px; background: var(--text-color); color: var(--overlay-bg); border: none; padding: 10px 20px; font-weight: bold; z-index: 101; }
         #focus-content { max-width: 900px; margin: 100px auto; padding: 0 30px; padding-bottom: 100px; }
         
         .process-step { margin-bottom: 60px; }
-        .process-step h3 { font-size: 1.5rem; text-transform: uppercase; border-bottom: 2px solid var(--text-color); display: inline-block; padding-bottom: 5px; margin-bottom: 20px; }
+        .process-step h3 { font-size: 1.5rem; text-transform: uppercase; border-bottom: 2px solid var(--text-color); padding-bottom: 5px; margin-bottom: 20px; }
         .process-step p { font-size: 1.25rem; line-height: 1.6; color: #333; max-width: 700px; }
 
-        /* PDF BUTTON STYLE */
-        .pdf-btn {
-            display: inline-block;
-            margin-top: 40px;
-            padding: 15px 30px;
-            background-color: #000;
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            text-transform: uppercase;
-            border: 1px solid #000;
-            transition: all 0.3s;
-        }
-        .pdf-btn:hover {
-            background-color: #fff;
-            color: #000;
-        }
+        .pdf-btn { display: inline-block; margin-top: 40px; padding: 15px 30px; background-color: #000; color: #fff; text-decoration: none; font-weight: bold; text-transform: uppercase; border: 1px solid #000; transition: all 0.3s; }
+        .pdf-btn:hover { background-color: #fff; color: #000; }
     </style>
 </head>
 <body>
@@ -94,6 +165,7 @@
         <div class="course-item">
             <button class="course-btn" onclick="toggleAccordion(this)">Human Computer Interaction</button>
             <div class="nested-options">
+                <div class="sub-link" onclick="openBeaconProject()">Group Project: BEACON</div>
                 <div class="sub-link" onclick="loadCourse('hci', 'individual')">Individual Assignments (5)</div>
             </div>
         </div>
@@ -112,11 +184,100 @@
 
     <div id="main-interface" class="hidden">
         <header class="sticky-header">
-            <button id="back-to-courses" class="nav-btn">← COURSES</button>
+            <button onclick="goBack()" class="nav-btn">← COURSES</button>
             <div id="view-label">ARCHIVE</div>
             <div style="width: 60px;"></div>
         </header>
         <main id="grid-container"></main>
+    </div>
+
+    <div id="beacon-view" class="hidden">
+        <header class="sticky-header">
+            <button onclick="goBack()" class="nav-btn">← COURSES</button>
+            <div>HCI // GROUP PROJECT</div>
+            <div style="width: 60px;"></div>
+        </header>
+
+        <div class="beacon-layout">
+            
+            <div class="bento-row">
+                <div class="text-col">
+                    <div class="beacon-label">01. Problem Analysis</div>
+                    <h2 class="beacon-heading">Interaction Regret</h2>
+                    <p class="beacon-body">
+                        Using the <strong>Cap_able Framework</strong> (Tech, Ethics, Design), we identified a critical gap: Algorithms optimize for <span class="highlight">Revealed Preferences</span> (impulses) rather than <span class="highlight">Stated Preferences</span> (values).<br><br>
+                        Research shows engagement ranking amplifies polarizing content by <strong>26-30%</strong>, creating an environment where users feel worse after participating.
+                    </p>
+                </div>
+                <div class="img-col">
+                    <img src="images/beacon_1_analysis.png" alt="Problem Analysis Graph">
+                </div>
+            </div>
+
+            <div class="bento-row">
+                <div class="text-col">
+                    <div class="beacon-label">02. Ideation</div>
+                    <h2 class="beacon-heading">Smart Friction</h2>
+                    <p class="beacon-body">
+                        We proposed a <strong>"Discourse Mode"</strong> (Zen Mode) that introduces intentional friction. Unlike standard feeds that reward speed, this mode encourages reflection.<br><br>
+                        The core concept is a <strong>Mode Toggle</strong>—giving users the agency to physically switch their environment from "Entertainment" (High stimulation) to "Discourse" (High reflection).
+                    </p>
+                </div>
+                <div class="img-col">
+                    <img src="images/beacon_2_ideation.png" alt="Ideation Sketches">
+                </div>
+            </div>
+
+            <div class="bento-row">
+                <div class="text-col dark-mode-cell">
+                    <div class="beacon-label">03. Development</div>
+                    <h2 class="beacon-heading">Calm Aesthetic</h2>
+                    <p class="beacon-body">
+                        We developed high-fidelity prototypes in <strong>Adobe Photoshop</strong>. The UI uses a calm, relaxing palette to reduce cognitive load.<br><br>
+                        By stripping away vanity metrics (likes/views) and using soft visual cues, the interface signals a <span class="highlight">safe space</span> for contemplation rather than reaction.
+                    </p>
+                </div>
+                <div class="img-col">
+                    <img src="images/beacon_3_dev.png" alt="UI Design Screens">
+                </div>
+            </div>
+
+            <div class="bento-row">
+                <div class="text-col">
+                    <div class="beacon-label">04. Iterations</div>
+                    <h2 class="beacon-heading">The Trigger</h2>
+                    <p class="beacon-body">
+                        We realized users need a cue to self-regulate. We refined the flow to include a <strong>Time Limit Notification</strong> as the trigger event.<br><br>
+                        <strong>Flow:</strong> Limit Reached &rarr; Interrupt Scroll &rarr; Toggle Interaction &rarr; Beacon App.
+                    </p>
+                </div>
+                <div class="img-col">
+                    <img src="images/beacon_4_iter.png" alt="User Flow Iteration">
+                </div>
+            </div>
+
+            <div class="bento-row final-row">
+                <div class="beacon-label">05. Progression</div>
+                <h2 class="beacon-heading">The Agency Loop</h2>
+                <p class="beacon-body">The final prototype realizes the complete journey: Disrupting the loop, Changing the Environment, and Rewarding the user.</p>
+                
+                <div class="final-grid">
+                    <div>
+                        <img src="images/beacon_5_final.png" class="final-img" alt="Final Screen 1">
+                        <p style="margin-top:10px; font-size:0.9rem; color:#666;">THE TRIGGER</p>
+                    </div>
+                    <div>
+                        <img src="images/beacon_3_dev.png" class="final-img" alt="Final Screen 2">
+                        <p style="margin-top:10px; font-size:0.9rem; color:#666;">THE ENVIRONMENT</p>
+                    </div>
+                    <div>
+                        <img src="images/beacon_5_final.png" class="final-img" alt="Final Screen 3">
+                        <p style="margin-top:10px; font-size:0.9rem; color:#666;">THE REWARD</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <div id="focus-overlay">
@@ -125,7 +286,7 @@
     </div>
 
     <script>
-        // --- DATA ---
+        // --- DATA (Strictly Preserved Individual Assignments) ---
         const DATA = {
             hci: {
                 name: "HCI",
@@ -133,7 +294,7 @@
                     { 
                         id: "HCI-01", 
                         title: "Show & Tell 1", 
-                        category: "Individual",
+                        category: "Individual", 
                         file: "documents/hci_individual_assignment_1.pdf", 
                         content: { 
                             intro: "Scroll Less, Think More: Addressing the polarization and lack of productive discourse on current social media platforms.", 
@@ -146,7 +307,7 @@
                     { 
                         id: "HCI-02", 
                         title: "Show & Tell 2", 
-                        category: "Individual",
+                        category: "Individual", 
                         file: "documents/hci_individual_assignment_2.pdf", 
                         content: { 
                             intro: "Communicating Identity Through Web Design: An analysis of how visuals, structure, and tone reflect the person behind the interface.", 
@@ -159,7 +320,7 @@
                     { 
                         id: "HCI-03", 
                         title: "Personal Website: Prototype", 
-                        category: "Individual",
+                        category: "Individual", 
                         file: "documents/hci_individual_assignment_3.pdf", 
                         content: { 
                             intro: "Translating identity and values into an intentional, usable interface. The concept centers on 'Bridging Disciplines'—combining technical expertise with business acumen.", 
@@ -172,7 +333,7 @@
                     { 
                         id: "HCI-04", 
                         title: "Personal Website: Development", 
-                        category: "Individual",
+                        category: "Individual", 
                         file: "documents/hci_individual_assignment_4.pdf", 
                         content: { 
                             intro: "From concept to code: A production-ready portfolio that embodies the 'bridge-connector' identity through minimalist design and sophisticated interactions.", 
@@ -185,7 +346,7 @@
                     { 
                         id: "HCI-05", 
                         title: "Personal Website: User Feedback", 
-                        category: "Individual",
+                        category: "Individual", 
                         file: "documents/hci_individual_assignment_5.pdf", 
                         content: { 
                             intro: "Refining the user experience through iterative testing with diverse user groups (Hiring Manager, Technical Peer, Client). The focus was on identifying friction points and enhancing usability.", 
@@ -205,9 +366,10 @@
             }
         };
 
-        // --- DOM & LOGIC ---
+        // --- DOM Elements ---
         const courseDir = document.getElementById('course-directory');
         const mainInterface = document.getElementById('main-interface');
+        const beaconView = document.getElementById('beacon-view');
         const gridContainer = document.getElementById('grid-container');
         const overlay = document.getElementById('focus-overlay');
         const focusContent = document.getElementById('focus-content');
@@ -219,12 +381,22 @@
             item.classList.toggle('active');
         }
 
+        // --- NAVIGATION LOGIC ---
+        
+        function openBeaconProject() {
+            courseDir.classList.add('hidden');
+            mainInterface.classList.add('hidden');
+            beaconView.classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
         function loadCourse(courseId, type) {
             const courseData = DATA[courseId];
             const items = courseData[type];
             if (!items) return;
 
             courseDir.classList.add('hidden');
+            beaconView.classList.add('hidden');
             mainInterface.classList.remove('hidden');
             viewLabel.textContent = `${courseData.name} // ARCHIVE`;
             
@@ -242,12 +414,13 @@
             });
         }
 
-        document.getElementById('back-to-courses').addEventListener('click', () => {
+        function goBack() {
             mainInterface.classList.add('hidden');
+            beaconView.classList.add('hidden');
             courseDir.classList.remove('hidden');
-        });
+        }
 
-        // --- UPDATED DETAIL VIEW ---
+        // --- DETAIL OVERLAY ---
         function openDetail(item) {
             let html = `
                 <div class="detail-header">
@@ -255,25 +428,19 @@
                     <p style="font-size:1.5rem; margin-bottom:40px;">${item.content.intro}</p>
                 </div>
             `;
-            
             if (item.content.steps) {
                 item.content.steps.forEach(step => {
                     html += `<div class="process-step"><h3>${step.title}</h3><p>${step.text}</p></div>`;
                 });
             }
-
-            // PDF BUTTON LOGIC
             if (item.file && item.file !== "") {
                 html += `
                     <div style="border-top: 1px solid #ccc; padding-top: 40px; margin-top: 60px;">
                         <p style="font-family: monospace; color: #666; margin-bottom: 10px;">ATTACHMENT</p>
-                        <a href="${item.file}" target="_blank" class="pdf-btn">
-                            VIEW FULL DOCUMENT ↗
-                        </a>
+                        <a href="${item.file}" target="_blank" class="pdf-btn">VIEW FULL DOCUMENT ↗</a>
                     </div>
                 `;
             }
-
             focusContent.innerHTML = html;
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -283,7 +450,6 @@
             overlay.classList.remove('active');
             document.body.style.overflow = '';
         });
-        
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') document.getElementById('close-overlay').click();
         });
