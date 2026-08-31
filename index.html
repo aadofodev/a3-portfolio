@@ -29,7 +29,6 @@
     <!-- Google Fonts - Bebas Neue for CURRENTLY -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@700&display=swap" rel="stylesheet">
     
     <!-- Preload Critical Resources -->
     <link rel="preload" href="https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2" as="font" type="font/woff2" crossorigin>
@@ -40,7 +39,6 @@
 
 </head>
 <body>
-    <!-- Logo Ticker Removed for Clean Design -->
     <!-- Skip to Content Link for Screen Readers -->
     <a href="#main-content" class="sr-only" style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;" 
        onfocus="this.style.position='static'; this.style.width='auto'; this.style.height='auto'; this.style.overflow='visible'; this.style.background='var(--color-primary)'; this.style.color='var(--color-btn-primary-text)'; this.style.padding='8px 16px'; this.style.textDecoration='none'; this.style.zIndex='9999';"
@@ -77,28 +75,50 @@
         </section>
 
         <!-- Projects Grid Section -->
-        <section id="assignments" class="assignments-hub">
-            <div class="hub-container">
-                <span class="hub-label">ACADEMIC ARCHIVE</span>
-                <h2 class="hub-title">SELECTED WORKS &<br>GROUP PROJECTS</h2>
-                <p class="hub-desc">
-                    A curated collection of individual assignments and full-cycle product development journeys.
-                </p>
-                <a href="assignments.html" class="hub-btn">
-                    OPEN COURSEWORK <span class="arrow">→</span>
-                </a>
+        <section id="assignments" class="section container">
+            <div class="section__header">
+                <h2 class="section__title">FEATURED ENGINEERING</h2>
+                <p class="section__subtitle">Highlighting full-stack development, AI pipelines, and data architecture.</p>
+            </div>
+            
+            <div class="projects__grid">
+                <article class="project-card card">
+                    <div class="card__body">
+                        <h3>My Kitchen Buddy App</h3>
+                        <p>A React Native & TypeScript mobile application utilizing React Context for immutable state management and external REST APIs.</p>
+                        <div class="project-tags">
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">React Native</span>
+                            <span class="tag">REST API</span>
+                        </div>
+                        <a href="https://github.com/aadofodev/my-kitchen-buddy" class="contact-link" style="margin-top: 20px; display: inline-block;" target="_blank">VIEW CODE →</a>
+                    </div>
+                </article>
+
+                <article class="project-card card">
+                    <div class="card__body">
+                        <h3>Local Document RAG AI</h3>
+                        <p>A 100% private, local Retrieval-Augmented Generation pipeline built with Python and Ollama to securely query enterprise documents.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">LLMs</span>
+                            <span class="tag">AI/Data</span>
+                        </div>
+                        <a href="https://github.com/aadofodev/local-document-rag" class="contact-link" style="margin-top: 20px; display: inline-block;" target="_blank">VIEW CODE →</a>
+                    </div>
+                </article>
             </div>
         </section>
 
         <!-- About Page Section -->
         <section id="about" class="section about-page" style="display: none;">
             <div class="container">
-                <!-- SECTION 1: BOLD OPENING STATEMENT (MUST BE FIRST) -->
+                <!-- Statement -->
                 <div class="about-hero-statement">
                     <h1 class="about-opening-statement">INNOVATION AND COLLABORATION RUNS DEEP IN HIS WORK.</h1>
                 </div>
                 
-                <!-- SECTION 2: BIO/RESUME SECTION (COMBINED) -->
+                <!-- Resume -->
                 <div class="about-section">
                     <div class="two-column-layout">
                         <div class="content-column">
@@ -118,7 +138,7 @@
                             
                             <!-- Download resume link -->
                             <div style="margin-top: var(--space-32);">
-                                <a href="#" class="contact-link">DOWNLOAD RESUME</a>
+                                <a href="Andrea_Adofo_Asiedu_CV.pdf" class="contact-link" download>DOWNLOAD RESUME</a>
                             </div>
                         </div>
                         <div class="info-column">
@@ -153,7 +173,7 @@
                     </div>
                 </div>
                 
-                <!-- SECTION 3: EXPERTISE -->
+                <!-- Expertise -->
                 <div class="about-section" style="margin-bottom: 120px;">
                     <div class="section__header">
                         <h2 class="section__title">EXPERTISE</h2>
@@ -209,7 +229,7 @@
                     </div>
                 </div>
                 
-                <!-- SECTION 4: AFFILIATIONS -->
+                <!-- Affiliations -->
                 <div class="about-section">
                     <div class="section__header affiliations-header">
                         <h2 class="section__title underlined affiliations-title">AFFILIATIONS</h2>
@@ -263,7 +283,6 @@
                         <a href="mailto:adofoandrea@gmail.com" class="contact-link" target="_blank">EMAIL</a>
                         <a href="https://linkedin.com/in/andrea-adofo-asiedu-a264431b3/" class="contact-link" target="_blank">LINKEDIN</a>
                         <a href="https://github.com/aadofodev/" class="contact-link" target="_blank">GITHUB</a>
-                        <!-- <a href="https://instagram.com/awesomealex" class="contact-link" target="_blank">INSTAGRAM</a> -->
                     </div>
                 </div>
             </div>
@@ -274,7 +293,7 @@
             <div class="container">
                 <div class="footer__content fade-in">
                     <div class="footer__text">
-                        © 2025 Andrea Adofo Asiedu. Designed with accessibility in mind. Last updated October 2025.
+                        © 2025 Andrea Adofo Asiedu. Designed with accessibility in mind. Last updated September 2026.
                     </div>
                     <nav class="footer__links" aria-label="Footer navigation">
                         <a href="#privacy" aria-label="Privacy Policy">Privacy Policy</a>

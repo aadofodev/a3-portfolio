@@ -1043,25 +1043,6 @@
           }
         }
 
-        /* Smooth Page Transitions */
-        .page-transition {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: var(--color-background);
-          z-index: 9999;
-          opacity: 0;
-          pointer-events: none;
-          transition: opacity var(--duration-normal) var(--ease-standard);
-        }
-
-        .page-transition.active {
-          opacity: 1;
-          pointer-events: all;
-        }
-
         /* Enhanced Hover Effects */
         .about__text h3 {
           position: relative;
@@ -1810,733 +1791,14 @@
             transition: all 0.3s ease-out;
             text-decoration: none;
         }
-        
-        /* Center circle independently from text */
 
-        /* Color variants for each card type */
-        .card.portfolio-item.education {
-            --bg-color: #ffd861;
-            --bg-color-light: #ffeeba;
-            --text-color-hover: #4C5656;
-            --box-shadow-color: rgba(255, 215, 97, 0.48);
-        }
-
-        .card.portfolio-item.credentialing {
-            --bg-color: #B8F9D3;
-            --bg-color-light: #e2fced;
-            --text-color-hover: #4C5656;
-            --box-shadow-color: rgba(184, 249, 211, 0.48);
-        }
-
-        .card.portfolio-item.wallet {
-            --bg-color: #CEB2FC;
-            --bg-color-light: #F0E7FF;
-            --text-color-hover: #fff;
-            --box-shadow-color: rgba(206, 178, 252, 0.48);
-        }
-
-        .card.portfolio-item.human-resources {
-            --bg-color: #DCE9FF;
-            --bg-color-light: #f1f7ff;
-            --text-color-hover: #4C5656;
-            --box-shadow-color: rgba(220, 233, 255, 0.48);
-        }
-
-        .card.portfolio-item:hover {
-            transform: translateY(-5px) scale(1.005) translateZ(0);
-            box-shadow: 0 24px 36px rgba(0,0,0,0.11),
-                0 24px 46px var(--box-shadow-color);
-        }
-
-        .card.portfolio-item:hover .overlay {
-            opacity: 0;
-        }
-        
-        /* Card hover image - expands from center like overlay */
-        .card.portfolio-item .card-hover-image {
-            position: absolute;
-            width: 0;
-            height: 0;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-            opacity: 0;
-            z-index: 0;
-            transition: all 0.3s ease-out;
-            filter: grayscale(100%) brightness(0.7);
-        }
-
-        /* Legacy support for project-box class */
-        .project-box {
-            background-color: #2a2a2a;
-            min-height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Global color change on project hover - Base transition */
-        body.project-hover-active {
-            transition: background-color 0.5s ease-in,
-                        color 0.8s ease-out;
-        }
-
-        /* Apply smooth transitions to all elements that change color */
-        body.project-hover-active *,
-        body.project-hover-1 *,
-        body.project-hover-2 *,
-        body.project-hover-3 *,
-        body.project-hover-4 *,
-        body.project-hover-5 *,
-        body.project-hover-6 * {
-            transition: background-color 0.8s ease-out,
-                        color 0.8s ease-out,
-                        filter 0.8s ease-out;
-        }
-
-        /* Project 1 - Beige */
-        body.project-hover-1,
-        body.project-hover-1 .header,
-        body.project-hover-1 .hero,
-        body.project-hover-1 .section,
-        body.project-hover-1 .footer {
-            background-color: #c6c4b9 !important;
-        }
-
-        body.project-hover-1 .hero__flat-text,
-        body.project-hover-1 .nav__brand,
-        body.project-hover-1 .nav__link,
-        body.project-hover-1 .section__title,
-        body.project-hover-1 .footer__text,
-        body.project-hover-1 .footer__links a,
-        body.project-hover-1 .contact-link,
-        body.project-hover-1 .contact-statement,
-        body.project-hover-1 h1,
-        body.project-hover-1 h2,
-        body.project-hover-1 h3,
-        body.project-hover-1 h4,
-        body.project-hover-1 p,
-        body.project-hover-1 .content-column h3,
-        body.project-hover-1 .content-column p,
-        body.project-hover-1 .current-project-content h3,
-        body.project-hover-1 .current-project-content p,
-        body.project-hover-1 .about-opening-statement,
-        body.project-hover-1 .info-block h4,
-        body.project-hover-1 .experience-title,
-        body.project-hover-1 .experience-subtitle,
-        body.project-hover-1 .expertise-column h3,
-        body.project-hover-1 .expertise-description,
-        body.project-hover-1 .expertise-list li {
-            color: #000000 !important;
-        }
-
-        body.project-hover-1 .initials.logo-img {
-            filter: none !important;
-        }
-
-        body.project-hover-1 .project-box,
-        body.project-hover-1 .card.portfolio-item {
-            background-color: #cccac0 !important;
-        }
-
-        /* Project 2 - Dark Gray */
-        body.project-hover-2,
-        body.project-hover-2 .header,
-        body.project-hover-2 .hero,
-        body.project-hover-2 .section,
-        body.project-hover-2 .footer {
-            background-color: #2b2e2e !important;
-        }
-
-        body.project-hover-2 .hero__flat-text,
-        body.project-hover-2 .nav__brand,
-        body.project-hover-2 .nav__link,
-        body.project-hover-2 .section__title,
-        body.project-hover-2 .footer__text,
-        body.project-hover-2 .footer__links a,
-        body.project-hover-2 .contact-link,
-        body.project-hover-2 .contact-statement,
-        body.project-hover-2 h1,
-        body.project-hover-2 h2,
-        body.project-hover-2 h3,
-        body.project-hover-2 h4,
-        body.project-hover-2 p,
-        body.project-hover-2 .content-column h3,
-        body.project-hover-2 .content-column p,
-        body.project-hover-2 .current-project-content h3,
-        body.project-hover-2 .current-project-content p,
-        body.project-hover-2 .about-opening-statement,
-        body.project-hover-2 .info-block h4,
-        body.project-hover-2 .experience-title,
-        body.project-hover-2 .experience-subtitle,
-        body.project-hover-2 .expertise-column h3,
-        body.project-hover-2 .expertise-description,
-        body.project-hover-2 .expertise-list li {
-            color: #ffffff !important;
-        }
-
-        body.project-hover-2 .initials.logo-img {
-            filter: invert(1) brightness(1.2) !important;
-        }
-
-        body.project-hover-2 .project-box,
-        body.project-hover-2 .card.portfolio-item {
-            background-color: #414343 !important;
-        }
-
-        /* Project 3 - Cyan Blue */
-        body.project-hover-3,
-        body.project-hover-3 .header,
-        body.project-hover-3 .hero,
-        body.project-hover-3 .section,
-        body.project-hover-3 .footer {
-            background-color: #07b0f3 !important;
-        }
-
-        body.project-hover-3 .hero__flat-text,
-        body.project-hover-3 .nav__brand,
-        body.project-hover-3 .nav__link,
-        body.project-hover-3 .section__title,
-        body.project-hover-3 .footer__text,
-        body.project-hover-3 .footer__links a,
-        body.project-hover-3 .contact-link,
-        body.project-hover-3 .contact-statement,
-        body.project-hover-3 h1,
-        body.project-hover-3 h2,
-        body.project-hover-3 h3,
-        body.project-hover-3 h4,
-        body.project-hover-3 p,
-        body.project-hover-3 .content-column h3,
-        body.project-hover-3 .content-column p,
-        body.project-hover-3 .current-project-content h3,
-        body.project-hover-3 .current-project-content p,
-        body.project-hover-3 .about-opening-statement,
-        body.project-hover-3 .info-block h4,
-        body.project-hover-3 .experience-title,
-        body.project-hover-3 .experience-subtitle,
-        body.project-hover-3 .expertise-column h3,
-        body.project-hover-3 .expertise-description,
-        body.project-hover-3 .expertise-list li {
-            color: #000000 !important;
-        }
-
-        body.project-hover-3 .initials.logo-img {
-            filter: none !important;
-        }
-
-        body.project-hover-3 .project-box,
-        body.project-hover-3 .card.portfolio-item {
-            background-color: #20b8f4 !important;
-        }
-
-        /* Project 4 - Dark Red */
-        body.project-hover-4,
-        body.project-hover-4 .header,
-        body.project-hover-4 .hero,
-        body.project-hover-4 .section,
-        body.project-hover-4 .footer {
-            background-color: #941608 !important;
-        }
-
-        body.project-hover-4 .hero__flat-text,
-        body.project-hover-4 .nav__brand,
-        body.project-hover-4 .nav__link,
-        body.project-hover-4 .section__title,
-        body.project-hover-4 .footer__text,
-        body.project-hover-4 .footer__links a,
-        body.project-hover-4 .contact-link,
-        body.project-hover-4 .contact-statement,
-        body.project-hover-4 h1,
-        body.project-hover-4 h2,
-        body.project-hover-4 h3,
-        body.project-hover-4 h4,
-        body.project-hover-4 p,
-        body.project-hover-4 .content-column h3,
-        body.project-hover-4 .content-column p,
-        body.project-hover-4 .current-project-content h3,
-        body.project-hover-4 .current-project-content p,
-        body.project-hover-4 .about-opening-statement,
-        body.project-hover-4 .info-block h4,
-        body.project-hover-4 .experience-title,
-        body.project-hover-4 .experience-subtitle,
-        body.project-hover-4 .expertise-column h3,
-        body.project-hover-4 .expertise-description,
-        body.project-hover-4 .expertise-list li {
-            color: #ffffff !important;
-        }
-
-        body.project-hover-4 .initials.logo-img {
-            filter: invert(1) brightness(1.2) !important;
-        }
-
-        body.project-hover-4 .project-box,
-        body.project-hover-4 .card.portfolio-item {
-            background-color: #9f2e21 !important;
-        }
-
-        /* Project 5 - Dark Gray/Black */
-        body.project-hover-5,
-        body.project-hover-5 .header,
-        body.project-hover-5 .hero,
-        body.project-hover-5 .section,
-        body.project-hover-5 .footer {
-            background-color: #222222 !important;
-        }
-
-        body.project-hover-5 .hero__flat-text,
-        body.project-hover-5 .nav__brand,
-        body.project-hover-5 .nav__link,
-        body.project-hover-5 .section__title,
-        body.project-hover-5 .footer__text,
-        body.project-hover-5 .footer__links a,
-        body.project-hover-5 .contact-link,
-        body.project-hover-5 .contact-statement,
-        body.project-hover-5 h1,
-        body.project-hover-5 h2,
-        body.project-hover-5 h3,
-        body.project-hover-5 h4,
-        body.project-hover-5 p,
-        body.project-hover-5 .content-column h3,
-        body.project-hover-5 .content-column p,
-        body.project-hover-5 .current-project-content h3,
-        body.project-hover-5 .current-project-content p,
-        body.project-hover-5 .about-opening-statement,
-        body.project-hover-5 .info-block h4,
-        body.project-hover-5 .experience-title,
-        body.project-hover-5 .experience-subtitle,
-        body.project-hover-5 .expertise-column h3,
-        body.project-hover-5 .expertise-description,
-        body.project-hover-5 .expertise-list li {
-            color: #ffffff !important;
-        }
-
-        body.project-hover-5 .initials.logo-img {
-            filter: invert(1) brightness(1.2) !important;
-        }
-
-        body.project-hover-5 .project-box,
-        body.project-hover-5 .card.portfolio-item {
-            background-color: #393939 !important;
-        }
-
-        /* Project 6 - Yellow/Green */
-        body.project-hover-6,
-        body.project-hover-6 .header,
-        body.project-hover-6 .hero,
-        body.project-hover-6 .section,
-        body.project-hover-6 .footer {
-            background-color: #e6e147 !important;
-        }
-
-        body.project-hover-6 .hero__flat-text,
-        body.project-hover-6 .nav__brand,
-        body.project-hover-6 .nav__link,
-        body.project-hover-6 .section__title,
-        body.project-hover-6 .footer__text,
-        body.project-hover-6 .footer__links a,
-        body.project-hover-6 .contact-link,
-        body.project-hover-6 .contact-statement,
-        body.project-hover-6 h1,
-        body.project-hover-6 h2,
-        body.project-hover-6 h3,
-        body.project-hover-6 h4,
-        body.project-hover-6 p,
-        body.project-hover-6 .content-column h3,
-        body.project-hover-6 .content-column p,
-        body.project-hover-6 .current-project-content h3,
-        body.project-hover-6 .current-project-content p,
-        body.project-hover-6 .about-opening-statement,
-        body.project-hover-6 .info-block h4,
-        body.project-hover-6 .experience-title,
-        body.project-hover-6 .experience-subtitle,
-        body.project-hover-6 .expertise-column h3,
-        body.project-hover-6 .expertise-description,
-        body.project-hover-6 .expertise-list li {
-            color: #000000 !important;
-        }
-
-        body.project-hover-6 .initials.logo-img {
-            filter: none !important;
-        }
-
-        body.project-hover-6 .project-box,
-        body.project-hover-6 .card.portfolio-item {
-            background-color: #e9e45a !important;
-        }
-
-        .project-text {
-            color: #ffffff;
-            font-size: var(--font-size-lg);
-            font-weight: var(--font-weight-bold);
-            text-transform: uppercase;
-            letter-spacing: var(--letter-spacing-tight);
-            text-align: center;
-            padding: var(--space-24);
-            opacity: 1;
-            transition: opacity 0.3s ease;
-            position: relative;
-            z-index: 2;
-        }
-
-        .project-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 1;
-        }
-
-        .project-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .project-box:hover .project-text {
-            opacity: 0;
-        }
-
-        .project-box:hover .project-image {
-            opacity: 1;
-        }
-
-        /* Tablet responsive */
-        @media (max-width: 1024px) {
-            .portfolio-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 2rem;
-            }
-            
-            .card,
-            .project-box {
-                min-height: 350px;
-            }
-        }
-
-        /* Mobile responsive */
-        @media (max-width: 768px) {
-            .portfolio-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-            
-            .card.portfolio-item {
-                aspect-ratio: 1;
-                min-height: 0;
-                height: 100%;
-                width: 100%;
-            }
-            
-            .project-box {
-                min-height: 300px;
-            }
-        }
-
-        /* Performance Optimizations */
-        .project-image img {
-          will-change: opacity;
-          backface-visibility: hidden;
-          -webkit-backface-visibility: hidden;
-        }
-        
-        .card,
-        .project-box {
-          will-change: transform;
-          backface-visibility: hidden;
-          -webkit-backface-visibility: hidden;
-        }
-        
-        /* Throttle hover effects for performance */
-        .card:hover,
-        .project-box:hover {
-          transition: transform var(--duration-normal) var(--ease-standard),
-                      box-shadow var(--duration-normal) var(--ease-standard);
-        }
-        
-        /* Lazy loading optimization */
-        img[loading="lazy"] {
-          opacity: 0;
-          transition: opacity var(--duration-normal) var(--ease-standard);
-        }
-        
-        img[loading="lazy"].loaded {
-          opacity: 1;
-        }
-        
-        /* Enhanced Color Contrast - WCAG AA Compliance */
-        .hero__flat-text {
-          color: #000000; /* 21:1 contrast ratio */
-        }
-        
-        .nav__link {
-          color: #1a1a1a; /* 16.75:1 contrast ratio */
-        }
-        
-        .footer__text,
-        .footer__links a {
-          color: #1a1a1a; /* 16.75:1 contrast ratio */
-        }
-        
-        /* Dark mode high contrast */
-        @media (prefers-color-scheme: dark) {
-          .hero__flat-text {
-            color: #ffffff; /* 21:1 contrast ratio on dark background */
-          }
-          
-          .nav__link {
-            color: #f5f5f5; /* 16.75:1 contrast ratio */
-          }
-        }
-        
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-          .nav__links {
-            display: flex;
-          }
-
-          .nav__brand-name {
-            display: none;
-          }
-
-          .hero__content {
-            padding-left: var(--space-16);
-            padding-right: var(--space-16);
-            max-width: 100%;
-            box-sizing: border-box;
-          }
-
-          .hero__flat-text {
-            font-size: clamp(36px, 10vw, 72px);
-            max-width: 100%;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            padding: 0 var(--space-16);
-            box-sizing: border-box;
-          }
-
-          .logo-ticker {
-            height: 32px;
-          }
-
-          .ticker-item {
-            min-width: 80px;
-            font-size: 10px;
-          }
-
-          .header {
-            top: 0;
-          }
-
-          .hero {
-            padding-top: 0;
-            align-items: center;
-            justify-content: flex-start;
-            min-height: 100vh;
-          }
-          
-          .hero__content {
-            width: 100%;
-          }
-
-          .hero__actions {
-            flex-direction: column;
-            align-items: flex-start;
-          }
-
-          .two-column-layout {
-            grid-template-columns: 1fr;
-            gap: var(--space-40);
-          }
-
-          .expertise-grid {
-            grid-template-columns: 1fr;
-            gap: var(--space-40);
-          }
-
-          .affiliations-logo-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--space-20);
-          }
-
-          .portfolio-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            max-width: 100%;
-            width: 100%;
-          }
-          
-          .card.portfolio-item {
-            aspect-ratio: 1;
-            min-height: 0;
-            height: 100%;
-            width: 100%;
-          }
-      
-          .expertise-grid-simple {
-            grid-template-columns: 1fr;
-            gap: var(--space-20);
-          }
-
-          .contact-links {
-            flex-direction: column;
-            gap: var(--space-20);
-          }
-
-          .contact-sidebar {
-            position: static;
-            right: auto;
-            top: auto;
-            transform: none;
-            margin: var(--space-32) auto;
-            width: fit-content;
-            max-width: 100%;
-          }
-          
-          /* Improved mobile navigation */
-          .nav__brand {
-            font-size: var(--font-size-base);
-          }
-          
-          .full-name {
-            display: none; /* Hide on mobile to save space */
-          }
-          
-          /* Better mobile touch targets */
-          .project-box,
-          .contact-link,
-          .nav__link {
-            min-height: 44px; /* iOS accessibility guideline */
-            min-width: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-          
-          /* Mobile-specific accessibility improvements */
-          .portfolio-grid {
-            gap: 1.5rem; /* Larger gaps for easier touch navigation */
-          }
-          
-          .contact-links {
-            gap: var(--space-32); /* Larger touch targets */
-          }
-
-          .sidebar-links {
-            flex-direction: row;
-            gap: var(--space-12);
-          }
-
-          .footer__content {
-            text-align: center;
-            flex-direction: column;
-            gap: var(--space-16);
-          }
-
-          .footer__links {
-            justify-content: center;
-            flex-wrap: wrap;
-          }
-
-          .footer {
-            padding: var(--space-24) 0;
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            position: relative !important;
-            z-index: 10 !important;
-            margin-top: var(--space-40);
-            background: transparent !important;
-          }
-
-          .footer .fade-in {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
-            visibility: visible !important;
-          }
-
-          /* Ensure footer is not hidden by any other element */
-          body {
-            padding-bottom: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-          }
-
-          main {
-            flex: 1;
-          }
-
-          .footer {
-            margin-top: auto;
-          }
-
-          .data-table {
-            font-size: var(--font-size-xs);
-          }
-
-          .data-table th,
-          .data-table td {
-            padding: var(--space-8) var(--space-12);
-          }
-        }
-
-        @font-face {
-          font-family: 'FKGroteskNeue';
-          src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2')
-            format('woff2');
-        }
-
-        /* Custom cursor pulse animation */
-        .custom-cursor {
-          position: fixed;
-          width: 20px;
-          height: 20px;
-          border: 2px solid var(--color-primary);
-          border-radius: 50%;
-          pointer-events: none;
-          z-index: 9999;
-          transition: transform 0.1s ease, border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
-          opacity: 0;
-          transform: translate(-50%, -50%);
-        }
-
-        /* Enhanced pulse with shadow for interactive elements */
-        .custom-cursor.pulse {
-          animation: cursorPulseWithShadow 1.5s ease-in-out infinite;
-        }
-
-        @keyframes cursorPulseWithShadow {
-          0%, 100% {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
-            box-shadow: 0 0 0 0 rgba(33, 140, 158, 0.5),
-                        0 0 0 0 rgba(33, 140, 158, 0.3);
-          }
-          50% {
-            transform: translate(-50%, -50%) scale(1.4);
-            opacity: 0.9;
-            box-shadow: 0 0 0 12px rgba(33, 140, 158, 0),
-                        0 0 0 24px rgba(33, 140, 158, 0);
-          }
-        }
-
-/* --- NEW HUB STYLES (Paste at bottom) --- */
 .assignments-hub {
     padding: 4rem 1.5rem;
     min-height: 50vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--color-white, #fff); /* Fallback to white */
+    background-color: transparent;
     border-top: 1px solid #eee;
     margin-bottom: 100px;
 }
@@ -2579,3 +1841,160 @@
 }
 
 .hub-btn:hover { transform: translateY(-5px); }
+
+/* --- FEATURED ENGINEERING SECTION FIXES --- */
+
+/* Center the header text properly */
+#assignments .section__header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Sync text colors with your JS scroll animation */
+#assignments .section__subtitle,
+.project-card h3,
+.project-card p,
+.project-card .tag,
+.project-card .contact-link {
+    color: var(--dynamic-text-color) !important;
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Adjust opacities for visual hierarchy */
+#assignments .section__subtitle { 
+    opacity: 0.8; 
+    max-width: 600px;
+    margin: 0 auto;
+}
+.project-card p { opacity: 0.8; }
+.project-card .tag { opacity: 0.6; }
+
+/* Fix the slash dividers between tags */
+.project-card .tag:not(:last-child)::after {
+    color: var(--dynamic-text-color) !important;
+    opacity: 0.4;
+}
+
+/* Make card borders adapt dynamically on scroll */
+.project-card.card {
+    background-color: transparent !important;
+    border-color: var(--dynamic-border-color) !important;
+}
+
+/* Add a sleek hover effect that respects the dynamic color */
+.project-card.card:hover {
+    border-color: var(--dynamic-text-color) !important;
+    transform: translateY(-8px);
+}
+
+/* --- RESTORED RESPONSIVE UI & CURSOR FIXES --- */
+
+/* 1. Remove the massive space under the Affiliations section */
+#about.section {
+    padding-bottom: 0 !important;
+}
+.about-section:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* 2. Restore the Custom Cursor */
+.custom-cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-primary);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease, border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+}
+
+.custom-cursor.pulse {
+    animation: cursorPulseWithShadow 1.5s ease-in-out infinite;
+}
+
+@keyframes cursorPulseWithShadow {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        box-shadow: 0 0 0 0 rgba(33, 140, 158, 0.5), 0 0 0 0 rgba(33, 140, 158, 0.3);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.4);
+        opacity: 0.9;
+        box-shadow: 0 0 0 12px rgba(33, 140, 158, 0), 0 0 0 24px rgba(33, 140, 158, 0);
+    }
+}
+
+/* 3. Restore Mobile Responsiveness & Fix Affiliations Scaling */
+@media (max-width: 1024px) {
+    .two-column-layout { gap: var(--space-40); }
+    .expertise-grid { gap: var(--space-40); }
+}
+
+@media (max-width: 768px) {
+    /* Fix global mobile layout */
+    .hero__content { padding: 0 var(--space-16); }
+    .hero__flat-text { font-size: clamp(36px, 10vw, 72px); }
+    .two-column-layout { grid-template-columns: 1fr; }
+    .expertise-grid { grid-template-columns: 1fr; gap: var(--space-40); }
+    
+    /* Fix Affiliations box breaking out of screen */
+    .section__title.underlined.affiliations-title {
+        padding-left: 15px;
+        font-size: clamp(40px, 15vw, 80px); /* Scales text so it fits */
+    }
+    
+    .affiliations-header {
+        left: 0; /* Stops the box from overflowing the screen edge */
+        width: 100%;
+    }
+    
+    .affiliations-gradient-box {
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        padding: var(--space-32) var(--space-16);
+    }
+    
+    .affiliations-logo-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+        gap: var(--space-20);
+    }
+    
+    .affiliation-logo {
+        max-height: 50px; /* Scales logos down to prevent overlap */
+    }
+
+    /* Fix Footer mobile layout */
+    .footer {
+        padding: var(--space-24) 0;
+        margin-top: var(--space-40);
+        position: relative !important;
+        background: transparent !important;
+    }
+    
+    .footer__content {
+        text-align: center;
+        flex-direction: column;
+        gap: var(--space-16);
+    }
+    
+    .footer__links {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+/* --- LOGO HOVER COLOR FIX --- */
+.logo-text,
+.initials,
+.full-name {
+    color: var(--dynamic-text-color) !important;
+}
